@@ -1,0 +1,14 @@
+description "etcd service"
+start on (net-device-up and local-filesystems and runlevel [2345])
+stop on runlevel [!2345]
+  
+respawn
+#console log # log stdout/stderr to /var/log/upstart/
+ 
+exec /usr/local/bin/etcd \
+    -name {{ grains['fqdn'] }} \
+    -data-dir /data/etcd \
+    -addr {{ grains['ip_interfaces']['eth0'][0] }}:4001 \
+    -peer-addr {{ grains['ip_interfaces']['eth0'][0] }}:7001 \
+    -discovery {{ pillar['etcd']['discovery'] }} \
+    >> /var/log/etcd.log 2>&1

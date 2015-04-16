@@ -1,0 +1,14 @@
+{
+    "bootstrap": false,
+    "server": true,
+    "datacenter": "test",
+    "data_dir": "/data/consul",
+    "encrypt": "isRJBhPfMKC3DeS3ZNbDXw==",
+    "log_level": "INFO",
+    "enable_syslog": true,
+    "start_join": [
+    {%- for server, addrs in salt['mine.get']('* and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() %}
+        "{{ addrs[0] }}"{% if not loop.last %},{% endif %}
+    {%- endfor %}
+    ]
+}

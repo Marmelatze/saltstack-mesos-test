@@ -1,0 +1,1 @@
+{{ grains['ip_interfaces']['eth0'][0] }}

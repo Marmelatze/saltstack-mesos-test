@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -x
+
+export DOCKER_HOST="localhost:2375"
+echo "$@" >> /var/log/mesos/docker
+
+#socketplane_commands=("run" "start" "stop" "rm")
+#for cmd in run start stop rm
+#do
+#  if [ "$cmd" == "$1" ]; then
+#	socketplane "$@"
+#	exit $?
+#   fi
+#done;
+
+# ensure deleting container via socketplane
+if [ "rm" == "$1" ]; then
+  for arg in "${@:2}"
+    do
+      if ! [[ $arg =~ ^- ]]; then
+	cid=$(docker ps -a --no-trunc=true | grep $arg | awk {' print $1'})
+ 	docker "$@"
+	result=$?
+	if [[ $result == 0 ]]; then
+		curl -s -X DELETE http://localhost:6675/v0.1/connections/$cid
+	fi;
+	break;
+      fi;
+    done;
+else
+  docker "$@"
+  result=$?
+fi;
+
+
+#docker "$@"
+exit $result
