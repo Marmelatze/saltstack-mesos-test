@@ -25,6 +25,12 @@ consul-binary:
     - watch:
       - cmd: consul-extract
 
+/usr/share/consul/ui:
+  archive.extracted:
+    - source: https://dl.bintray.com/mitchellh/consul/{{ pillar['consul']['version'] }}_web_ui.zip
+    - source_hash: md5=ba0bc4923a7d1da2a2b6092872c84822
+    - archive_format: zip
+
 ## consul service
 
 /etc/init/consul.conf:
@@ -51,5 +57,23 @@ consul:
     - running
   require:
     - file: /etc/init/consul.conf
+    - archive: /usr/share/consul/ui
   watch:
     - file: /etc/inid/consul.conf
+
+
+# dns
+dnsmasq:
+  pkg.installed: []
+  service:
+    - running
+
+
+/etc/dnsmasq.d/10-consul:
+  file.managed:
+    - source: salt://consul/templates/dnsmasq
+    - require:
+      - pkg: dnsmasq
+    - watch_in:
+      - service: dnsmasq
+

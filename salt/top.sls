@@ -6,3 +6,5 @@ base:
     - flannel
     - docker
     - mesos-slave
+    - registrator
+    - marathon

@@ -6,6 +6,10 @@
     "encrypt": "isRJBhPfMKC3DeS3ZNbDXw==",
     "log_level": "INFO",
     "enable_syslog": true,
+    "addresses": {
+        "http": "{{ salt['grains.get']('ip4_interfaces:docker0:0', '127.0.0.1') }}"
+    },
+    "recursors": ["10.120.20.3", "10.120.20.4"],
     "start_join": [
     {%- for server, addrs in salt['mine.get']('* and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() %}
         "{{ addrs[0] }}"{% if not loop.last %},{% endif %}

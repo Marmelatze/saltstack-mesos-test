@@ -1,0 +1,10 @@
+description "Registrator"
+
+start on filesystem and started docker and started consul
+stop on runlevel [!2345]
+respawn
+
+
+script
+  /usr/bin/docker run -v /var/run/docker.sock:/tmp/docker.sock -h {{ grains['fqdn'] }} --rm --name=registrator gliderlabs/registrator:master -ttl 30 -ttl-refresh 20 -internal consul://{{ salt['grains.get']('ip4_interfaces:docker0:0', '127.0.0.1') }}:8500
+end script

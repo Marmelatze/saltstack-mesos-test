@@ -19,5 +19,6 @@ exec consul agent \
   "--config-dir=/etc/consul/server" \
   "--data-dir=/data/consul" \
   "--bootstrap-expect=3" \
+  "--ui-dir=/usr/share/consul/ui/dist" \
   ${CONSUL_FLAGS} \
   >> /var/log/consul.log 2>&1
