@@ -4,3 +4,4 @@ base:
     - mine
     - etcd
     - flannel
+    - mesos

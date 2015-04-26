@@ -1,0 +1,2 @@
+mesos:
+  interface: eth0

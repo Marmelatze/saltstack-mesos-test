@@ -1,5 +1,10 @@
+mesos:
+  pkg.installed: []
+
 mesos-slave:
-  service.running: []
+  service.running:
+    - require:
+      - pkg: docker
 
 /etc/mesos-slave:
   file.recurse:

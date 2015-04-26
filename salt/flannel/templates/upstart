@@ -1,11 +1,14 @@
 description "flannel service"
 start on (started etcd and runlevel [2345])
 stop on runlevel [!2345]
-  
+
 respawn
 #console log # log stdout/stderr to /var/log/upstart/
- 
+
+pre-start script
+  /usr/local/bin/etcdctl mk /coreos.com/network/config '{"Network":"10.244.0.0/16", "Backend": {"Type": "vxlan"}}' || true
+end script
+
 exec /usr/src/flannel/bin/flanneld \
     -etcd-endpoints="http://127.0.0.1:4001" \
-    -ip-masq=true \
-    >> /var/log/flannel.log 2>&1
+    -ip-masq=true

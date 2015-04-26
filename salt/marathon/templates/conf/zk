@@ -1,0 +1,3 @@
+zk://{%- for server, addrs in salt['mine.get']('*', 'network.ip_addrs').items() -%}
+  {{ addrs[0] }}:2181{% if not loop.last %},{% endif -%}
+{%- endfor -%}/marathon

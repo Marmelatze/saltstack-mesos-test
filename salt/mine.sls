@@ -4,5 +4,6 @@
     - watch_in:
       - service: salt-minion
 
-salt-minion:
-  service.running: []
+salt-minion-service:
+  service.running:
+    - name: salt-minion

@@ -9,8 +9,9 @@ linux-libc-dev:
 golang:
   pkg.installed: []
 
-build-essential:
-  pkg.installed: []
+flannel-build-essential:
+  pkg.installed:
+    - name: build-essential
 
 flannel-compile:
   cmd.wait:
@@ -20,7 +21,7 @@ flannel-compile:
       - git: https://github.com/coreos/flannel.git
       - pkg: golang
       - pkg: linux-libc-dev
-      - pkg: build-essential
+      - pkg: flannel-build-essential
     - watch:
       - git: https://github.com/coreos/flannel.git
 
@@ -36,8 +37,11 @@ flannel:
   service:
     - running
     - enable: True
-  require:
-    - file: /etc/init/flannel.conf
-  watch:
-    - file: /etc/inid/flannel.conf
+    - require:
+      - file: /etc/init/flannel.conf
+      - cmd: flannel-compile
+    - watch:
+      - file: /etc/init/flannel.conf
 
+bridge-utils:
+  pkg.installed: []
