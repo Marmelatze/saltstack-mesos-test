@@ -14,5 +14,12 @@
     {%- for server, addrs in salt['mine.get']('* and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() %}
         "{{ addrs[0] }}"{% if not loop.last %},{% endif %}
     {%- endfor %}
-    ]
+  ],
+  "retry_max": 0,
+  "retry_interval": "10s",
+  "retry_join": [
+  {%- for server, addrs in salt['mine.get']('* and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() %}
+      "{{ addrs[0] }}"{% if not loop.last %},{% endif %}
+  {%- endfor %}
+  ]
 }

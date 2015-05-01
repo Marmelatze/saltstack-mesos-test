@@ -8,6 +8,7 @@ registrator:
     - running
     - require:
       - file: /etc/init/registrator.conf
+      - service: consul
     - watch:
       - file: /etc/init/registrator.conf
 
@@ -15,7 +16,7 @@ registrator:
 #registrator-docker:
 #  docker.installed:
 #    - name: registrator
-#    - image: gliderlabs/registrator 
+#    - image: gliderlabs/registrator
 #    - volumes:
 #      - /var/run/docker.sock: /tmp/docker.sock
 #    - restart_policy:

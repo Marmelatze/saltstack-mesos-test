@@ -1,1 +1,1 @@
-{{ grains['fqdn'] }}
+{{ grains['ip_interfaces'][pillar['mesos']['interface']][0] }}
