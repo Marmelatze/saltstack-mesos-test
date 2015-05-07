@@ -3,9 +3,14 @@
 # Customize location of Docker binary (especially for development testing).
 #DOCKER="/usr/local/bin/docker"
 
-. /run/flannel/subnet.env
+#. /run/flannel/subnet.env
 # Use DOCKER_OPTS to modify the daemon startup options.
-DOCKER_OPTS="--ip-masq=false --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}"
+#DOCKER_OPTS="--ip-masq=false --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}"
+DOCKER_OPTS="--bridge={{ pillar['docker']['network']['bridge'] }} \
+    --fixed-cidr={{ pillar['docker']['network']['fixed_cidr'] }} \
+    --dns={{ salt['grains.get']('ip4_interfaces:weave:0', '127.0.0.1') }} \
+    --insecure-registry 10.90.43.79:5000 \
+    -s overlay"
 
 # If you need Docker to use an HTTP proxy, it can also be specified here.
 #export http_proxy="http://127.0.0.1:3128/"

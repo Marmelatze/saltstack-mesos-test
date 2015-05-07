@@ -11,24 +11,32 @@ docker-repo:
 /etc/default/docker:
   file.managed:
     - source: salt://docker/templates/default
+    - template: jinja
     - require:
       - pkg: docker
 
 /etc/init/docker.conf:
   file.managed:
     - source: salt://docker/templates/upstart
+    - template: jinja
     - require:
       - pkg: docker
-      - service: flannel
 
 docker:
   pkg.installed:
     - name: lxc-docker
-    - require:
-      - service: flannel
   service.running:
     - watch:
       - file: /etc/default/docker
     - require:
       - pkg: docker
-      - service: flannel
+
+#docker-routes:
+#  network.routes:
+#    - name: eth0
+#    - routes:
+#      
+#      - name: 
+#        ipaddr: 10.100.0.0
+#        netmask: 255.255.0.0
+#        gateway: 10.1.0.10

@@ -3,8 +3,9 @@ base:
     - mine
     - consul
     - etcd
-    - flannel
+    #- flannel
     - docker
     - mesos-slave
     - registrator
     - marathon
+    #- weave

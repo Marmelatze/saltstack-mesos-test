@@ -2,12 +2,22 @@ description "Registrator"
 
 start on filesystem and started docker and started consul
 stop on runlevel [!2345]
+
 respawn
+respawn limit 10 10
+
+start on started docker
+stop on stopped docker
 
 pre-start script
-  /usr/bin/docker rm -f registrator || true
+  /usr/bin/docker rm -f registrator ||true
 end script
 
 script
-  /usr/bin/docker run -v /var/run/docker.sock:/tmp/docker.sock -h {{ grains['fqdn'] }} --restart=always --name=registrator gliderlabs/registrator:master -ttl 30 -ttl-refresh 20 -internal consul://10.244.65.1:8500
-end script
+  /usr/bin/docker run \
+    --restart=always \
+    --name=registrator \
+    -v /var/run/docker.sock:/tmp/docker.sock \
+    -h {{ grains['fqdn'] }} \
+    10.90.43.79:5000/registrator:latest -ttl 30 -ttl-refresh 20 -internal consul://{{ salt['grains.get']('ip4_interfaces:weave:0', '$HOST') }}:8500
+end script 
