@@ -1,0 +1,17 @@
+upstream backend {
+    {% raw %}
+    {{range service "influxdb:8087"}}
+    {{if eq .Port 8086 }}
+    server {{.Address}}:{{.Port}};
+    {{end}}
+    {{end}}
+    {% endraw %}
+}
+
+server {
+    listen 10.123.0.1:8086;
+    location / {
+        proxy_read_timeout 10;
+        proxy_pass http://backend;
+    }
+}

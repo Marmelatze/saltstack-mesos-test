@@ -39,16 +39,11 @@ consul-binary:
     - watch_in:
       - service: consul
 
-/etc/consul:
-  file.directory: []
-
 /etc/consul/server/config.json:
   file.managed:
     - source: salt://consul/templates/server.json
     - template: jinja
     - makedirs: True
-    - require:
-      - file: /etc/consul
     - watch_in:
       - service: consul
 
@@ -76,4 +71,50 @@ dnsmasq:
       - pkg: dnsmasq
     - watch_in:
       - service: dnsmasq
+
+
+## consul template
+/usr/src/consul-template:
+  archive.extracted:
+    - source: https://github.com/hashicorp/consul-template/releases/download/v{{ pillar['consul']['template']['version'] }}/consul-template_{{ pillar['consul']['template']['version'] }}_linux_amd64.tar.gz
+    - source_hash: {{ pillar['consul']['template']['hash'] }}
+    - archive_format: tar
+    - if_missing: /usr/src/consul-template/consul-template_{{ pillar['consul']['template']['version'] }}_linux_amd64
+
+/usr/local/bin/consul-template:
+  file.copy:
+    - source: /usr/src/consul-template/consul-template_{{ pillar['consul']['template']['version'] }}_linux_amd64/consul-template
+    - mode: 0755
+    - force: True
+    - require:
+      - archive: /usr/src/consul-template
+    - watch:
+      - archive: /usr/src/consul-template
+
+/etc/consul/template.hcl:
+  file.managed:
+    - source: salt://consul/templates/template.hcl
+    - watch_in:
+      - service: consul-template
+
+/etc/consul/templates:
+  file.recurse:
+    - source: salt://consul/templates/templates
+    - makedirs: True
+    - template: jinja
+    - watch_in:
+      - service: consul-template
+
+/etc/init/consul-template.conf:
+  file.managed:
+    - source: salt://consul/templates/template-upstart
+
+consul-template:
+  service:
+    - running
+    - enable: True
+    - require:
+      - file: /etc/init/consul-template.conf
+      - file: /etc/consul/templates
+      - file: /etc/consul/template.hcl
 

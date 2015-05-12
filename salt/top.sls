@@ -9,3 +9,4 @@ base:
     - registrator
     - marathon
     #- weave
+    - nginx
