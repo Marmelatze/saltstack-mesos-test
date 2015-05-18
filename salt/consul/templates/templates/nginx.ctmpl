@@ -1,0 +1,25 @@
+{% for type in ['external', 'internal'] %}
+{% for src_port, tgt_port in service[type].items() %}
+upstream backend-{{ type }}-{{ tgt_port }} {
+    {{ "{{range service \"" ~ service.serviceName ~ ":" ~ src_port ~ "\"}}" }}
+    {{ "{{if eq .Port " ~ src_port ~ " }}" }}
+    {% raw %}
+    server {{.Address}}:{{.Port}};
+    {{end}}
+    {{end}}
+    {% endraw %}
+}
+
+server {
+    {% if type == "internal" %}
+    listen {{ pillar['docker']['network']['gw'] }}:{{ tgt_port }};
+    {% else %}
+    listen {{ salt['grains.get']('ip4_interfaces:eth0:0', '127.0.0.1') }}:{{ tgt_port }};
+    {% endif %}
+    location / {
+        proxy_read_timeout 10;
+        proxy_pass http://backend-{{ type }}-{{ tgt_port }};
+    }
+}
+{% endfor %}
+{% endfor %}

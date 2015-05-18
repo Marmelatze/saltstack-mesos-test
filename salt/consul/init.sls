@@ -94,20 +94,37 @@ dnsmasq:
 /etc/consul/template.hcl:
   file.managed:
     - source: salt://consul/templates/template.hcl
-    - watch_in:
-      - service: consul-template
-
-/etc/consul/templates:
-  file.recurse:
-    - source: salt://consul/templates/templates
-    - makedirs: True
     - template: jinja
     - watch_in:
       - service: consul-template
 
+{% for service in pillar['consul']['services'] %}
+/etc/consul/templates/{{ service.name }}.ctmpl:
+  file.managed:
+    - source: salt://consul/templates/templates/nginx.ctmpl
+    - makedirs: True
+    - template: jinja
+    - context:
+        service: {{ service }} 
+    - watch_in:
+      - service: consul-template
+    - require_in:
+      - service: consul-template
+
+#/etc/consul/templates/service:
+#  file.recurse:
+#    - source: salt://consul/templates/templates
+#    - makedirs: True
+#    - template: jinja
+#    - watch_in:
+#      - service: consul-template
+{% endfor %}   
+
 /etc/init/consul-template.conf:
   file.managed:
     - source: salt://consul/templates/template-upstart
+    - watch_in:
+      - service: consul-template
 
 consul-template:
   service:
@@ -115,6 +132,5 @@ consul-template:
     - enable: True
     - require:
       - file: /etc/init/consul-template.conf
-      - file: /etc/consul/templates
       - file: /etc/consul/template.hcl
 

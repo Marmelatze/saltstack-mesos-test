@@ -10,3 +10,4 @@ base:
     - marathon
     #- weave
     - nginx
+    - cadvisor

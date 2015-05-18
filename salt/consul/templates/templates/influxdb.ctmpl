@@ -9,7 +9,7 @@ upstream backend {
 }
 
 server {
-    listen 10.123.0.1:8086;
+    listen {{ pillar['docker']['network']['gw'] }}:8086;
     location / {
         proxy_read_timeout 10;
         proxy_pass http://backend;

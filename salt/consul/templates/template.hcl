@@ -1,4 +1,4 @@
-consul = "10.123.0.1:8500"
+consul = "{{ pillar['docker']['network']['gw'] }}:8500"
 
 #template {
 #  source = "/etc/consul/templates/nginx.ctmpl"
