@@ -8,6 +8,6 @@ base:
     - mesos-slave
     - registrator
     - marathon
-    #- weave
+    - weave
     - nginx
     - cadvisor

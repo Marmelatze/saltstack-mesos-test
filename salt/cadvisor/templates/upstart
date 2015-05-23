@@ -20,5 +20,6 @@ docker run \
   --volume=/sys:/sys:ro \
   --volume=/var/lib/docker/:/var/lib/docker:ro \
   --name=cadvisor \
-  google/cadvisor:latest -storage_driver=influxdb -storage_driver_host={{ pillar['docker']['network']['gw'] }}:8086
+  -p 4040:8080 \
+  google/cadvisor:latest -storage_driver=influxdb -storage_driver_host={{ pillar['docker']['gw'] }}:8086
 end script

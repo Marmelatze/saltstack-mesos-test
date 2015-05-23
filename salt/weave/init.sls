@@ -9,15 +9,29 @@ weave:
     - enable: True
     - require:
       - file: weave
+      - file: weave-bridge
       - file: /etc/init/weave.conf
 
 weave-bridge:
-  cmd.run:
-    - name: weave --local create-bridge && ip addr add dev weave {{ pillar['weave']['bridge_cidr'] }}
-    - unless:  |
-        [ $(ip -f inet -o addr show weave|cut -d\  -f 7) = "{{ pillar['weave']['bridge_cidr'] }}" ]
-    - require:
-      - file: weave
+  file.blockreplace:
+    - name: /etc/network/interfaces
+    - marker_start: '## weave config start ##'
+    - marker_end: '## weave config end ##'
+    - append_if_not_found: True
+
+weave-bridge-config:
+  file.accumulated:
+    - filename: /etc/network/interfaces
+    - text: |
+        auto weave
+        iface weave inet manual
+              pre-up /usr/local/bin/weave --local create-bridge
+              post-up ip addr add dev weave {{ pillar['weave']['bridge_cidr'] }}
+              pre-down ifconfig weave down
+              post-down brctl delbr weave
+    - require_in:
+      - file: weave-bridge
+
 
 /etc/init/weave.conf:
   file.managed:
@@ -25,6 +39,7 @@ weave-bridge:
     - template: jinja
     - require:
       - file: weave
+      - file: weave-bridge
     - watch_in:
       - service: weave
 

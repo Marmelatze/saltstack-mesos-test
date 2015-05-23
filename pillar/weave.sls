@@ -4,6 +4,9 @@ weave:
   network_cidr: 10.123.{{ grains['weave']['host_id'] }}.0/24
 
 docker:
-  network:
+  gw: 10.123.0.{{ grains['weave']['host_id'] }}
+  options:
     bridge: weave
-    fixed_cidr: 10.123.{{ grains['weave']['host_id'] }}.0/24
+    fixed-cidr: 10.123.{{ grains['weave']['host_id'] }}.0/24
+    bip: 
+    dns: 10.123.0.{{ grains['weave']['host_id'] }}

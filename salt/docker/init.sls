@@ -31,15 +31,15 @@ docker:
     - require:
       - pkg: docker
 
-docker-routes:
-  network.routes:
-    - name: eth0
-    - routes:
-      {% for server, interfaces in salt['mine.get']('* and not ' ~ grains['fqdn'], 'ip_list', expr_form='compound').items() %}
-      {% if interfaces['docker0'] is defined and interfaces['eth0'] is defined %}
-      - name: {{ server }}
-        ipaddr: {{ interfaces['docker0'][0].split(".")[0:3]|join(".") }}.0
-        netmask: 255.255.255.0
-        gateway: {{ interfaces['eth0'][0] }}
-      {% endif %}
-      {% endfor %} 
+#docker-routes:
+#  network.routes:
+#    - name: eth0
+#    - routes:
+#      {% for server, interfaces in salt['mine.get']('* and not ' ~ grains['fqdn'], 'ip_list', expr_form='compound').items() %}
+#      {% if interfaces['docker0'] is defined and interfaces['eth0'] is defined %}
+#      - name: {{ server }}
+#        ipaddr: {{ interfaces['docker0'][0].split(".")[0:3]|join(".") }}.0
+#        netmask: 255.255.255.0
+#        gateway: {{ interfaces['eth0'][0] }}
+#      {% endif %}
+#      {% endfor %} 

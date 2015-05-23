@@ -2,7 +2,7 @@ base:
   '*':
     - consul
     - docker
-    #- weave
+    - weave
     - mine
     - etcd
     - flannel

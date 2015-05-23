@@ -18,7 +18,6 @@ respawn
 respawn limit 10 10
 
 pre-start script
-  weave expose {{ pillar['weave']['bridge_cidr'] }};
   /usr/local/bin/weave launch -password $WEAVE_PASSWORD $PEERS
 end script
 

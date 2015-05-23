@@ -6,8 +6,9 @@
 #. /run/flannel/subnet.env
 # Use DOCKER_OPTS to modify the daemon startup options.
 #DOCKER_OPTS="--ip-masq=false --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}"
-DOCKER_OPTS="--bip={{ pillar['docker']['network']['bip'] }} \
-    --dns={{ pillar['docker']['network']['dns'] }} \
+DOCKER_OPTS="{% for opt, value in pillar['docker']['options'].items() if value is not none -%}
+    --{{ opt }}={{ value }} \
+    {% endfor -%}
     --insecure-registry 10.90.43.79:5000 \
     -s overlay"
 

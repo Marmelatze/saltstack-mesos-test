@@ -12,7 +12,7 @@ upstream backend-{{ type }}-{{ tgt_port }} {
 
 server {
     {% if type == "internal" %}
-    listen {{ pillar['docker']['network']['gw'] }}:{{ tgt_port }};
+    listen {{ pillar['docker']['gw'] }}:{{ tgt_port }};
     {% else %}
     listen {{ salt['grains.get']('ip4_interfaces:eth0:0', '127.0.0.1') }}:{{ tgt_port }};
     {% endif %}

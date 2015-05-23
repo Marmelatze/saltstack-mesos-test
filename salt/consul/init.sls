@@ -67,6 +67,7 @@ dnsmasq:
 /etc/dnsmasq.d/10-consul:
   file.managed:
     - source: salt://consul/templates/dnsmasq
+    - template: jinja
     - require:
       - pkg: dnsmasq
     - watch_in:
