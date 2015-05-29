@@ -99,14 +99,11 @@ dnsmasq:
     - watch_in:
       - service: consul-template
 
-{% for service in pillar['consul']['services'] %}
-/etc/consul/templates/{{ service.name }}.ctmpl:
+/etc/consul/templates/nginx.ctmpl:
   file.managed:
     - source: salt://consul/templates/templates/nginx.ctmpl
     - makedirs: True
     - template: jinja
-    - context:
-        service: {{ service }} 
     - watch_in:
       - service: consul-template
     - require_in:
@@ -119,7 +116,6 @@ dnsmasq:
 #    - template: jinja
 #    - watch_in:
 #      - service: consul-template
-{% endfor %}   
 
 /etc/init/consul-template.conf:
   file.managed:
