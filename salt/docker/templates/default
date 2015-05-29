@@ -9,8 +9,7 @@
 DOCKER_OPTS="{% for opt, value in pillar['docker']['options'].items() if value is not none -%}
     --{{ opt }}={{ value }} \
     {% endfor -%}
-    --insecure-registry 10.90.43.79:5000 \
-    -s overlay"
+    --insecure-registry 10.90.43.79:5000"
 
 # If you need Docker to use an HTTP proxy, it can also be specified here.
 #export http_proxy="http://127.0.0.1:3128/"

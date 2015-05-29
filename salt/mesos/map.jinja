@@ -1,0 +1,8 @@
+{% set mesos = salt['grains.filter_by']({
+    'default': {
+        'masters': salt['mine.get']('G@roles:master', 'zookeeper', expr_form='compound'),
+    },
+    'Debian': {
+    },
+},
+merge=salt['pillar.get']('mesos:lookup'), base='default') %}

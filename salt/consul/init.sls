@@ -28,7 +28,7 @@ consul-binary:
 /usr/share/consul/ui:
   archive.extracted:
     - source: https://dl.bintray.com/mitchellh/consul/{{ pillar['consul']['version'] }}_web_ui.zip
-    - source_hash: md5=ba0bc4923a7d1da2a2b6092872c84822
+    - source_hash: {{ pillar['consul']['hash']['ui'] }}
     - archive_format: zip
 
 ## consul service
@@ -130,4 +130,3 @@ consul-template:
     - require:
       - file: /etc/init/consul-template.conf
       - file: /etc/consul/template.hcl
-

@@ -1,3 +1,5 @@
+{% from "mesos/map.jinja" import mesos with context %}
+
 mesos-repo:
   pkgrepo.managed:
     - humanname: Mesos Repo
@@ -5,15 +7,14 @@ mesos-repo:
     - file: /etc/apt/sources.list.d/mesosphere.list
     - keyid: E56151BF
     - keyserver: keyserver.ubuntu.com
-    - require_in:
-      - pkg: mesosphere
-      - pkg: mesos
 
 /etc/mesos/zk:
   file.managed:
     - source: salt://mesos/templates/zk.j2
     - template: jinja
     - makedirs: True
+    - context:
+        masters: {{ mesos.masters }}
 
 {% for server, addrs in salt['mine.get']('*', 'network.ip_addrs').items() %}
 

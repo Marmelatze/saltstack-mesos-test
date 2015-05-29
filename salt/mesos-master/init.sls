@@ -1,5 +1,9 @@
+{% from "mesos/map.jinja" import mesos with context %}
+
 mesosphere:
-  pkg.installed: []
+  pkg.installed:
+    - require:
+      - pkgrepo: mesos-repo
 
 /etc/zookeeper/conf/myid:
   file.managed:
@@ -16,6 +20,8 @@ mesosphere:
     - makedirs: True
     - watch_in:
       - service: zookeeper
+    - context:
+        servers: {{ mesos.masters }}
 
 /etc/mesos-master:
   file.recurse:
@@ -23,6 +29,8 @@ mesosphere:
     - template: jinja
     - watch_in:
       - service: mesos-master
+    - context:
+        servers: {{ mesos.masters }}
 
 zookeeper:
   service.running: []

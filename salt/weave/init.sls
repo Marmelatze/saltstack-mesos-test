@@ -32,6 +32,11 @@ weave-bridge-config:
     - require_in:
       - file: weave-bridge
 
+weave-interface:
+  cmd.wait:
+    - name: "ifdown weave; ifup weave;"
+    - watch:
+      - file: weave-bridge
 
 /etc/init/weave.conf:
   file.managed:
@@ -42,5 +47,3 @@ weave-bridge-config:
       - file: weave-bridge
     - watch_in:
       - service: weave
-
-

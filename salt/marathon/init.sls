@@ -1,5 +1,7 @@
 marathon:
-  service.running: []
+  service.running:
+    - require:
+      - pkgrepo: mesos-repo
 
 /etc/init/marathon.conf:
   file.managed:

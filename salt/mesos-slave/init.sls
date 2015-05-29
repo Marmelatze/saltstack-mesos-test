@@ -1,5 +1,7 @@
 mesos:
-  pkg.installed: []
+  pkg.installed:
+    - require:
+      - pkgrepo: mesos-repo
 
 mesos-slave:
   service.running:

@@ -7,3 +7,4 @@ base:
     - etcd
     - flannel
     - mesos
+    - cadvisor
