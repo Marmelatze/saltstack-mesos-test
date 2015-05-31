@@ -1,1 +1,1 @@
-{{ grains['fqdn'] }}
+{{ grains['fqdn'] }}

@@ -1,3 +1,6 @@
+{% from "mesos/map.jinja" import mesos with context %}
+
+
 marathon:
   service.running:
     - require:
@@ -17,3 +20,5 @@ marathon:
     - template: jinja
     - watch_in:
       - service: marathon
+    - context:
+        masters: {{ mesos.masters }}

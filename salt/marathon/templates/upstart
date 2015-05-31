@@ -6,4 +6,9 @@ stop on runlevel [!2345]
 respawn
 respawn limit 10 5
 
-exec /usr/bin/marathon --ha --hostname {{ salt['grains.get']('ip4_interfaces:eth0:0', '127.0.0.1') }}
+script
+
+  LIBPROCESS_IP={{ grains['ip_interfaces'][pillar['mesos']['interface']][0] }}
+  /usr/bin/marathon --ha --hostname {{ grains['fqdn'] }}
+
+end script

@@ -16,6 +16,13 @@ mesos-repo:
     - context:
         masters: {{ mesos.masters }}
 
+/root/cleanup.sh:
+  file.managed:
+    - source: salt://mesos/templates/cleanup.sh
+    - template: jinja
+    - mode: 0755
+    
+
 {% for server, addrs in salt['mine.get']('*', 'network.ip_addrs').items() %}
 
 host-{{ server}}:
