@@ -1,21 +1,16 @@
-upstream backend-{{ type }}-{{ tgt_port }} {
-    {{ "{{range service \"" ~ service.serviceName ~ ":" ~ src_port ~ "\"}}" }}
-    {{ "{{if eq .Port " ~ src_port ~ " }}" }}
-    {% raw %}
+{{range ls "proxy"}}
+{{with $d := .Value | parseJSON}}
+upstream backend-{{$d.service}}-{{$d.servicePort}} {
+    {{range service (print $d.service ":" $d.containerPort)}}
     server {{.Address}}:{{.Port}};
     {{end}}
-    {{end}}
-    {% endraw %}
 }
-
 server {
-    {% if type == "internal" %}
-    listen {{ pillar['docker']['gw'] }}:{{ tgt_port }};
-    {% else %}
-    listen {{ salt['grains.get']('ip4_interfaces:eth0:0', '127.0.0.1') }}:{{ tgt_port }};
-    {% endif %}
+    listen {{$d.servicePort}};
     location / {
         proxy_read_timeout 10;
-        proxy_pass http://backend-{{ type }}-{{ tgt_port }};
+        proxy_pass http://backend-{{$d.service}}-{{$d.servicePort}};
     }
 }
+{{end}}
+{{end}}

@@ -1,24 +1,21 @@
 {
-    "bootstrap": false,
-    "server": true,
-    "datacenter": "test",
-    "data_dir": "/data/consul",
-    "encrypt": {{ pillar['consul']['encrypt'] }},
-    "log_level": "INFO",
-    "enable_syslog": true,
-    "addresses": {
-        "http": "{{ pillar['docker']['gw'] }}"
-    },
-    "recursors": ["10.120.20.3", "10.120.20.4"],
-    "start_join": [
-    {%- for server, addrs in salt['mine.get']('* and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() %}
-        "{{ addrs[0] }}"{% if not loop.last %},{% endif %}
-    {%- endfor %}
-  ],
+  "bootstrap": false,
+  {% if pillar['consul']['mode'] == "server" %}"bootstrap_expect": {{ expect }},{% endif %}
+  "server": {% if pillar['consul']['mode'] == "server" %}true{% else %}false{% endif%},
+  "datacenter": "test",
+  "data_dir": "/data/consul",
+  "encrypt": "{{ pillar['consul']['encrypt'] }}",
+  "log_level": "INFO",
+  "enable_syslog": true,
+  "advertise_addr": "{{ grains['ip_interfaces'][pillar['mesos']['interface']][0] }}",
+  "addresses": {
+    "http": "0.0.0.0"
+  },
+  "recursors": ["10.120.20.3", "10.120.20.4"],
   "retry_max": 0,
   "retry_interval": "10s",
   "retry_join": [
-  {%- for server, addrs in salt['mine.get']('* and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() %}
+  {%- for server, addrs in salt['mine.get']('G@roles:master and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() %}
       "{{ addrs[0] }}"{% if not loop.last %},{% endif %}
   {%- endfor %}
   ]

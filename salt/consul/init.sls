@@ -1,6 +1,20 @@
 unzip:
   pkg.installed: []
 
+
+
+consul-user:
+  user.present:
+    - name: consul
+    - system: True
+
+/data/consul:
+  file.directory:
+    - user: consul
+    - group: consul
+    - require:
+      - user: consul-user
+
 consul-download:
   cmd.run:
     - name: 'curl -L https://dl.bintray.com/mitchellh/consul/{{ pillar['consul']['version'] }}_linux_amd64.zip -o /usr/src/consul-{{ pillar['consul']['version'] }}.zip'
@@ -31,6 +45,7 @@ consul-binary:
     - source_hash: {{ pillar['consul']['hash']['ui'] }}
     - archive_format: zip
 
+
 ## consul service
 
 /etc/init/consul.conf:
@@ -39,6 +54,8 @@ consul-binary:
     - watch_in:
       - service: consul
 
+{% set expect = salt['mine.get']('G@roles:master', 'network.ip_addrs', expr_form='compound').items()|length %}
+
 /etc/consul/server/config.json:
   file.managed:
     - source: salt://consul/templates/server.json
@@ -46,6 +63,8 @@ consul-binary:
     - makedirs: True
     - watch_in:
       - service: consul
+    - context:
+        expect: {{ expect }}
 
 consul:
   service:
@@ -103,7 +122,6 @@ dnsmasq:
   file.managed:
     - source: salt://consul/templates/templates/nginx.ctmpl
     - makedirs: True
-    - template: jinja
     - watch_in:
       - service: consul-template
     - require_in:
