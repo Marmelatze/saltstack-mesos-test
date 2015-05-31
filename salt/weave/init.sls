@@ -1,8 +1,8 @@
 weave:
   file.managed:
     - name: /usr/local/bin/weave
-    - source: https://github.com/weaveworks/weave/releases/download/v0.10.0/weave
-    - source_hash: md5=42cea37beb4288e118e69d9236a276ee
+    - source: https://github.com/weaveworks/weave/releases/download/v{{ pillar['weave']['version'] }}/weave
+    - source_hash: {{ pillar['weave']['hash'] }}
     - mode: 0755
   service:
     - running
@@ -11,6 +11,8 @@ weave:
       - file: weave
       - file: weave-bridge
       - file: /etc/init/weave.conf
+    - watch:
+      - file: /usr/local/bin/weave
 
 weave-bridge:
   file.blockreplace:

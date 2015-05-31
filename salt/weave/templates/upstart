@@ -3,26 +3,26 @@ description "weave router"
 start on filesystem and started docker
 stop on runlevel [!2345]
 
+
 # Start just after the System-V jobs (rc) to ensure networking and zookeeper
 # are started. This is as simple as possible to ensure compatibility with
 # Ubuntu, Debian, CentOS, and RHEL distros. See:
 # http://upstart.ubuntu.com/cookbook/#standard-idioms
 env PEERS="
 {%- for server, addrs in salt['mine.get']('* and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() -%}
-{{ addrs[0] }}{% if not loop.last %} {% endif %} 
+{{ addrs[0] }}{% if not loop.last %} {% endif %}
 {%- endfor %}"
 
 env WEAVE_PASSWORD="install"
 
-start on started docker
-stop on stopped docker
-
 respawn
 respawn limit 10 10
 
-pre-start script
+script
+  [ -e /etc/default/weave ] && . /etc/default/weave
+  /usr/bin/docker rm -f weave ||true
   /usr/local/bin/weave launch -password $WEAVE_PASSWORD $PEERS
+  /usr/bin/docker logs -f weave
 end script
 
-exec /usr/bin/docker logs -f weave
 pre-stop exec /usr/local/bin/weave stop
