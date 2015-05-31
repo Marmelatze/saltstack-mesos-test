@@ -1,0 +1,27 @@
+description "Docker Registry"
+
+# Start just after the System-V jobs (rc) to ensure networking and zookeeper
+# are started. This is as simple as possible to ensure compatibility with
+# Ubuntu, Debian, CentOS, and RHEL distros. See:
+# http://upstart.ubuntu.com/cookbook/#standard-idioms
+
+start on started docker
+stop on stopped docker
+
+respawn
+respawn limit 10 10
+
+pre-start script
+  /usr/bin/docker rm -f registry ||true
+end script
+
+script
+    docker run \
+         --restart=always \
+         --name=registry \
+         -e STORAGE_PATH=/registry \
+         -e SEARCH_BACKEND=sqlalchemy \
+         -v /data/registry:/registry \
+         -p 5000:5000 \
+         registry:0.9.1
+end script
