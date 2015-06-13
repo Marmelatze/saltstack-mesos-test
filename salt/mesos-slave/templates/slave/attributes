@@ -1,1 +1,4 @@
-host:{{ grains['fqdn'] }};rack:a
+host:{{ grains['fqdn'] }};{% for attribute, value in salt['pillar.get']('mesos-slave:attributes', {}).items() -%}
+{{ attribute }}:{{ value }}
+{%- if not loop.last %};{% endif %}
+{%- endfor %}

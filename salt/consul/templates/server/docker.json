@@ -1,0 +1,12 @@
+{
+    "service": {
+        "name": "docker",
+        "port": 2375,
+        "checks": [
+            {
+                "http": "http://localhost:2375/info",
+                "interval": "30s"
+            }
+        ]
+    }
+}

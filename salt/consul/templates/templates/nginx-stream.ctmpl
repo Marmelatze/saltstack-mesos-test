@@ -1,6 +1,6 @@
 {{range ls "proxy"}}
 {{with $d := .Value | parseJSON}}
-    {{if eq $d.type "http"}}
+    {{if eq $d.type "tcp"}} 
     upstream backend-{{$d.service}}-{{$d.servicePort}} {
         {{range service (print $d.service ":" $d.containerPort)}}
         server {{.Address}}:{{.Port}};
@@ -8,10 +8,7 @@
     }
     server {
         listen {{$d.servicePort}};
-        location / {
-            proxy_read_timeout {{if $d.timeout }}{{$d.timeout}}{{ else }}10{{end}};
-            proxy_pass http://backend-{{$d.service}}-{{$d.servicePort}};
-        }
+        proxy_pass backend-{{$d.service}}-{{$d.servicePort}};
     }
     {{end}}
 {{end}}

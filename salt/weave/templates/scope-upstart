@@ -1,0 +1,27 @@
+description "weave scoper"
+
+start on filesystem and started docker
+stop on runlevel [!2345]
+
+
+# Start just after the System-V jobs (rc) to ensure networking and zookeeper
+# are started. This is as simple as possible to ensure compatibility with
+# Ubuntu, Debian, CentOS, and RHEL distros. See:
+# http://upstart.ubuntu.com/cookbook/#standard-idioms
+env PEERS="
+{%- for server, addrs in salt['mine.get']('* and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() -%}
+{{ addrs[0] }}{% if not loop.last %} {% endif %}
+{%- endfor %}"
+
+
+respawn
+respawn limit 10 10
+
+script
+  [ -e /etc/default/weavescope ] && . /etc/default/weavescope
+  /usr/bin/docker rm -f weavescope ||true
+  /usr/local/bin/weave-scope launch -http.address=":4043" $PEERS
+  /usr/bin/docker logs -f weavescope
+end script
+
+pre-stop exec /usr/local/bin/weave-scope stop

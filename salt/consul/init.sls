@@ -56,15 +56,17 @@ consul-binary:
 
 {% set expect = salt['mine.get']('G@roles:master', 'network.ip_addrs', expr_form='compound').items()|length %}
 
-/etc/consul/server/config.json:
-  file.managed:
-    - source: salt://consul/templates/server.json
+
+/etc/consul/server:
+  file.recurse:
+    - source: salt://consul/templates/server
     - template: jinja
     - makedirs: True
     - watch_in:
       - service: consul
     - context:
-        expect: {{ expect }}
+        expect: {{ expect }}
+
 
 consul:
   service:
@@ -118,9 +120,9 @@ dnsmasq:
     - watch_in:
       - service: consul-template
 
-/etc/consul/templates/nginx.ctmpl:
-  file.managed:
-    - source: salt://consul/templates/templates/nginx.ctmpl
+/etc/consul/templates:
+  file.recurse:
+    - source: salt://consul/templates/templates
     - makedirs: True
     - watch_in:
       - service: consul-template

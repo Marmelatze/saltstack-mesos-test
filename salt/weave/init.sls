@@ -49,3 +49,7 @@ weave-interface:
       - file: weave-bridge
     - watch_in:
       - service: weave
+
+
+include: 
+  - .weave-scope

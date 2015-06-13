@@ -12,3 +12,16 @@ nginx:
     - enable: True
     - require:
       - pkg: nginx
+
+/etc/nginx/nginx.conf:
+  file.managed:
+    - source: salt://nginx/templates/nginx.conf
+    - watch_in:
+      - service: nginx
+    - require:
+      - pkg: nginx
+
+/etc/nginx/streams-enabled:
+  file.directory:
+    - require:
+      - pkg: nginx

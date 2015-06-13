@@ -4,6 +4,9 @@ weave:
   host_id: {{ grains['weave']['host_id'] }}
   bridge_cidr: 10.123.0.{{ grains['weave']['host_id'] }}/16
   network_cidr: 10.123.{{ grains['weave']['host_id'] }}.0/24
+  scope:
+    version: 0.2.0
+    hash: md5=720d489fce75031261fe251af1ee589b
 
 docker:
   gw: 10.123.0.{{ grains['weave']['host_id'] }}

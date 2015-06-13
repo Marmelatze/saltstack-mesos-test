@@ -27,5 +27,10 @@ mesos-slave:
     - template: jinja
     - watch_in:
       - service: mesos-slave
+      - cmd: mesos-slave-unlink
     - context:
         masters: {{ mesos.masters }}
+
+mesos-slave-unlink:
+  cmd.wait:
+    - name: rm -f /tmp/mesos/meta/slaves/latest

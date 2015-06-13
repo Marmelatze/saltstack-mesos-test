@@ -11,6 +11,9 @@ stop on stopped docker
 
 pre-start script
   /usr/bin/docker rm -f cadvisor ||true
+  {% if pillar['cadvisor']['version'] == "latest" %}
+  /usr/bin/docker pull google/cadvisor:{{ pillar['cadvisor']['version'] }}
+  {% endif %}
 end script
 
 script

@@ -8,3 +8,8 @@ base:
     - flannel
     - mesos
     - cadvisor
+
+  'roles:master':
+    - match: grain
+    - zookeeper
+
