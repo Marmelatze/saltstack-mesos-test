@@ -16,3 +16,9 @@ template {
   destination = "/etc/nginx/streams-enabled/service-proxy"
   command = "service nginx reload || true"
 }
+
+template {
+  source = "/etc/consul/templates/nginx-web.ctmpl"
+  destination = "/etc/nginx/sites-enabled/web-proxy"
+  command = "service nginx reload || true"
+}

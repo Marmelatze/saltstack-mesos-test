@@ -55,7 +55,7 @@ consul-binary:
       - service: consul
 
 {% set expect = salt['mine.get']('G@roles:master', 'network.ip_addrs', expr_form='compound').items()|length %}
-
+#'
 
 /etc/consul/server:
   file.recurse:
