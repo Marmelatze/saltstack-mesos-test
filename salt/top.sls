@@ -1,5 +1,12 @@
 base:
-  '*':
+  '*': []
+
+
+  'bastion':
+    - cloud
+
+  'G@roles:master and G@roles:slave':
+    - match: compound
     - mesos
     - consul
 

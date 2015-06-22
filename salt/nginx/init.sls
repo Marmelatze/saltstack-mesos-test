@@ -25,3 +25,6 @@ nginx:
   file.directory:
     - require:
       - pkg: nginx
+
+/etc/nginx/sited-enabled/default:
+  file.absent: []

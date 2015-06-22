@@ -1,5 +1,8 @@
 base:
-  '*':
+  '*': []
+
+  'G@roles:master and G@roles:slave':
+    - match: compound
     - consul
     - docker
     - weave
@@ -12,4 +15,3 @@ base:
   'roles:master':
     - match: grain
     - zookeeper
-
