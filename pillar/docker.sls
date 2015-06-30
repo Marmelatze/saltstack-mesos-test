@@ -5,4 +5,5 @@ docker:
   options:
     bip: 10.123.{{ grains['host_id'] }}.1/24
     dns: 10.123.{{ grains['host_id'] }}.1
+    mtu: 1480
   storage: overlay
