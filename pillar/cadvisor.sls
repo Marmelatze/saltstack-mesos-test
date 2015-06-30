@@ -1,2 +1,2 @@
 cadvisor:
-  version: 0.15.1
+  image: 10.123.0.1:5000/cadvisor:canary

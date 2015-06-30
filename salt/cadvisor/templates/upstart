@@ -11,9 +11,7 @@ stop on stopped docker
 
 pre-start script
   /usr/bin/docker rm -f cadvisor ||true
-  {% if pillar['cadvisor']['version'] == "latest" %}
-  /usr/bin/docker pull google/cadvisor:{{ pillar['cadvisor']['version'] }}
-  {% endif %}
+  /usr/bin/docker pull {{ pillar['cadvisor']['image'] }}
 end script
 
 script
@@ -24,5 +22,5 @@ docker run \
   --volume=/var/lib/docker/:/var/lib/docker:ro \
   --name=cadvisor \
   -p 4040:8080 \
-  google/cadvisor:{{ pillar['cadvisor']['version'] }}
+  {{ pillar['cadvisor']['image'] }} --docker_metadata_env="MARATHON_APP_ID,MARATHON_APP_VERSION,MESOS_TASK_ID"
 end script
