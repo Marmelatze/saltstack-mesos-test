@@ -22,3 +22,10 @@ marathon:
       - service: marathon
     - context:
         masters: {{ mesos.masters }}
+
+/usr/share/marathon-ui:
+  git.latest:
+    - name: https://github.com/Marmelatze/marathon-ui.git
+    - rev: stats
+    - target: /usr/share/marathon-ui
+

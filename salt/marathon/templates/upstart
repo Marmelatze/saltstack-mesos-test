@@ -9,6 +9,6 @@ respawn limit 10 5
 script
 
   export LIBPROCESS_IP={{ grains['ip_interfaces'][pillar['mesos']['interface']][0] }}
-  /usr/bin/marathon --ha --hostname {{ grains['fqdn'] }}
+  /usr/bin/marathon --ha --hostname {{ grains['fqdn'] }} --assets_path /usr/share/marathon-ui
 
 end script
