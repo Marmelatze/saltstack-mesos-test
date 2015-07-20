@@ -1,33 +1,35 @@
-{{range ls "proxy/web"}}
-  {{with $d := .Value | parseJSON}}
-    {{if $d}}
-      {{if service (print $d.service ":" $d.containerPort)}}
-        upstream web-backend-{{$d.service}}-{{$d.containerPort}} {
-          {{range service (print $d.service ":" $d.containerPort)}}
-          server {{.Address}}:{{.Port}};
-          {{end}}
-        }
-      {{end}}
-    {{end}}
-  {{end}}
-{{end}}
+{{range ls "customer"}}
+  {{if ne .Key "template"}}
+    {{with $customer := .Value | parseJSON}}
+      {{if $customer}}
+        {{range ls "proxy/web"}}
+          {{with $d := .Value | parseJSON}}
+            {{if $d}}
+              {{if service (print "customer-" $customer.id "." $d.service ":" $d.containerPort)}}
+                upstream web-backend-customer-{{$customer.id}}-{{$d.service}}-{{$d.containerPort}} {
+                  {{range service (print "customer-" $customer.id "." $d.service ":" $d.containerPort)}}
+                  server {{.Address}}:{{.Port}};
+                  {{end}}
+                }
+              {{end}}
 
-server {
-  listen 80;
-  listen [::]:80;
-  {{range ls "proxy/web"}}
-    {{with $d := .Value | parseJSON}}
-      {{if $d}}
-        {{if service (print $d.service ":" $d.containerPort)}}
-          location /{{$d.location}} {
-            proxy_read_timeout      {{if $d.timeout }}{{$d.timeout}}{{ else }}10{{end}};
-            proxy_pass              http://web-backend-{{$d.service}}-{{$d.containerPort}};
-            proxy_set_header        X-Real-IP $remote_addr;
-            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header        Host $http_host;
-          }
+              server {
+                listen 80;
+                listen [::]:80;
+                server_name {{$d.service}}.{{$customer.name}}.schub-test.local;
+
+                location / {
+                  proxy_read_timeout      {{if $d.timeout }}{{$d.timeout}}{{ else }}10{{end}};
+                  proxy_pass              http://web-backend-customer-{{$customer.id}}-{{$d.service}}-{{$d.containerPort}};
+                  proxy_set_header        X-Real-IP $remote_addr;
+                  proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header        Host $http_host;
+                }
+              }
+            {{end}}
+          {{end}}
         {{end}}
       {{end}}
     {{end}}
   {{end}}
-}
+{{end}}
