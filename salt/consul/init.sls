@@ -8,12 +8,16 @@ consul-user:
     - name: consul
     - system: True
 
+/data:
+  file.directory: []
+
 /data/consul:
   file.directory:
     - user: consul
     - group: consul
     - require:
       - user: consul-user
+      - file: /data
 
 consul-download:
   cmd.run:
