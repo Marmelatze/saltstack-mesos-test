@@ -31,6 +31,17 @@ docker:
     - require:
       - pkg: docker
 
+{% if pillar['docker']['storage'] == "aufs" %}
+linux-image-extra-{{ grains['kernelrelease'] }}:
+  pkg.installed:
+    - require_in: docker
+
+linux-image-extra-virtual:
+  pkg.installed:
+    - require_in: docker
+    
+{% endif %}
+
 #docker-routes:
 #  network.routes:
 #    - name: eth0
@@ -42,4 +53,4 @@ docker:
 #        netmask: 255.255.255.0
 #        gateway: {{ interfaces['eth0'][0] }}
 #      {% endif %}
-#      {% endfor %} 
+#      {% endfor %}
