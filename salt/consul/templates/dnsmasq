@@ -1,6 +1,6 @@
 server=/consul/127.0.0.1#8600
 address=/gateway/{{ pillar['docker']['gw'] }}
-
+address=/.{{ pillar['schub']['domain'] }}/{{ pillar['docker']['gw'] }}
 
 {% for server, addrs in salt['mine.get']('*', 'network.ip_addrs').items() %}
 address=/{{ server }}/{{ addrs[0] }}

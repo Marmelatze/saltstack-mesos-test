@@ -9,6 +9,7 @@ base:
     - mine
     - mesos
     - cadvisor
+    - schub
 
   'roles:master':
     - match: grain
