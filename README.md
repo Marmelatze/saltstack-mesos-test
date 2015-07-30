@@ -10,13 +10,13 @@ Kombinierte Installation von Master und Minion:
 
 ```
 curl -L https://bootstrap.saltstack.com -o install_salt.sh
-sudo sh install_salt.sh -M
+sudo sh install_salt.sh -M -P
 ```
 
 Dieses Repository in /srv/salt clonen
 
 ```
-git clone https://github.com/Marmelatze/saltstack-mesos-test /srv/salt
+sudo git clone https://github.com/Marmelatze/saltstack-mesos-test /srv/salt
 ```
 
 Konfiguration des Masters anpassen:
@@ -33,10 +33,19 @@ pillar_roots:
     - /srv/salt/pillar
 ```
 
+Master neustarten
+
+```
+sudo service salt-master restart
+```
+
+Die Minion-Instalation muss jetzt nicht mehr ausgeführt werden, allerdings die Konfiguration angepasst werden.
+In der Minion-Konfiguration muss der Eintrag master noch auf localhost geändert werden.
+
 
 ## Minion-Installation
 
-Nur den Minion installieren ohne Master:
+Nur den Minion installieren ohne Master (nicht nötig, wenn Master installiert wurde):
 
 ```
 curl -L https://bootstrap.saltstack.com -o install_salt.sh
@@ -58,7 +67,7 @@ mine_functions:
     - zookeeper
 ```
 
-Die Salt-Grains anpassen, dabei muss eine .
+Die Salt-Grains anpassen, dabei muss eine ID gewählt werden (z.B. 1).
 
 ```
 # /etc/salt/grains
@@ -77,7 +86,14 @@ Die Rolle kann auch nur `slave` oder `master` sein. Auf Slaves wird Mesos-Slave 
 Den Minion neustarten:
 
 ```
-service salt-minion restart
+sudo service salt-minion restart
+```
+
+
+Auf dem Master muss der Public-Key des neuen Minions akzeptiert werden:
+
+```
+sudo salt-key -A
 ```
 
 ## SaltStack ausführen
@@ -85,11 +101,11 @@ service salt-minion restart
 Auf einem Minion:
 
 ```
-salt-call state.highstate
+sudo salt-call state.highstate
 ```
 
 Vom Salt-Master alle Minions updaten:
 
 ```
-salt '*' state.highstate
+sudo salt '*' state.highstate
 ```
