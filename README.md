@@ -6,6 +6,8 @@ Es wird ein Salt-Master benötigt, die anderen Hosts sind Minions.
 
 ## Master-Installation:
 
+Kombinierte Installation von Master und Minion:
+
 ```
 curl -L https://bootstrap.saltstack.com | sudo sh
 sudo sh install_salt.sh -M
@@ -33,6 +35,8 @@ pillar_roots:
 
 
 ## Minion-Installation
+
+Nur den Minion installieren ohne Master:
 
 ```
 curl -L https://bootstrap.saltstack.com | sudo sh
