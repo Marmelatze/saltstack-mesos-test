@@ -7,8 +7,6 @@ base:
     - docker
     - weave
     - mine
-    - etcd
-    - flannel
     - mesos
     - cadvisor
 

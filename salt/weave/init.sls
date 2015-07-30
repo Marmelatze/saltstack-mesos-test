@@ -51,5 +51,5 @@ weave-interface:
       - service: weave
 
 
-include: 
-  - .weave-scope
+#include: 
+#  - .weave-scope
