@@ -6,7 +6,7 @@ mesos-repo:
     - name: deb http://repos.mesosphere.io/{{ grains['os']|lower }} {{ grains['oscodename'] }} main
     - file: /etc/apt/sources.list.d/mesosphere.list
     - keyid: E56151BF
-    - keyserver: keyserver.ubuntu.com
+    - keyserver: hkp://keyserver.ubuntu.com:80
 
 /etc/mesos/zk:
   file.managed:
@@ -21,7 +21,7 @@ mesos-repo:
     - source: salt://mesos/templates/cleanup.sh
     - template: jinja
     - mode: 0755
-    
+
 
 {% for server, addrs in salt['mine.get']('*', 'network.ip_addrs').items() %}
 
