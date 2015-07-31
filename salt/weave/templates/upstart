@@ -4,16 +4,12 @@ start on filesystem and started docker
 stop on runlevel [!2345]
 
 
-# Start just after the System-V jobs (rc) to ensure networking and zookeeper
-# are started. This is as simple as possible to ensure compatibility with
-# Ubuntu, Debian, CentOS, and RHEL distros. See:
-# http://upstart.ubuntu.com/cookbook/#standard-idioms
 env PEERS="
 {%- for server, addrs in salt['mine.get']('* and not ' ~ grains['fqdn'], 'network.ip_addrs', expr_form='compound').items() -%}
 {{ addrs[0] }}{% if not loop.last %} {% endif %}
 {%- endfor %}"
 
-env WEAVE_PASSWORD="install"
+env WEAVE_PASSWORD="{{ pillar['weave']['password'] }}"
 
 respawn
 respawn limit 10 10
