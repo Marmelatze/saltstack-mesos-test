@@ -7,3 +7,4 @@ address=/{{ server }}/{{ addrs[0] }}
 
 {% endfor %}
 local=/localnet/
+local=/localdomain/

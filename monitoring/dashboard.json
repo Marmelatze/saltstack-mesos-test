@@ -1,0 +1,1183 @@
+{
+  "id": 1,
+  "title": "Containers",
+  "originalTitle": "Containers",
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": true,
+  "rows": [
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "id": 6,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "110%",
+          "span": 2,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true
+          },
+          "targets": [
+            {
+              "calculatedInterval": "1m",
+              "datasourceErrors": {},
+              "errors": {},
+              "expr": "count(container_memory_usage_bytes{id=~\"/docker/\",node=~\"$node\",name=~\"$container\",marathon_app_id =~\"$marathon_app\",image=~\"$image\"})",
+              "interval": "",
+              "intervalFactor": 10,
+              "legendFormat": "",
+              "metric": "",
+              "prometheusLink": "/api/datasources/proxy/1/graph#%5B%7B%22expr%22%3A%22count(container_memory_usage_bytes%7Bid%3D~%5C%22%2Fdocker%2F%5C%22%2Cnode%3D~%5C%22%24node%5C%22%2Cname%3D~%5C%22%24container%5C%22%2Cmarathon_app_id%20%3D~%5C%22%24marathon_app%5C%22%2Cimage%3D~%5C%22%24image%5C%22%7D)%22%2C%22range_input%22%3A%22900s%22%2C%22end_input%22%3A%222015-7-7%2010%3A18%22%2C%22step_input%22%3A%22%22%2C%22tab%22%3A0%7D%5D"
+            }
+          ],
+          "thresholds": "",
+          "title": "Running Containers",
+          "type": "singlestat",
+          "valueFontSize": "170%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": 0,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 4,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 5,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "calculatedInterval": "10s",
+              "datasourceErrors": {},
+              "errors": {},
+              "expr": "count(container_memory_usage_bytes{id=~\"/docker/\",node=~\"$node\",name=~\"$container\",marathon_app_id =~\"$marathon_app\",image=~\"$image\"}) by (node)",
+              "hide": false,
+              "interval": "",
+              "intervalFactor": 10,
+              "legendFormat": "{{node}}",
+              "metric": "",
+              "prometheusLink": "/api/datasources/proxy/1/graph#%5B%7B%22expr%22%3A%22count(container_memory_usage_bytes%7Bid%3D~%5C%22%2Fdocker%2F%5C%22%2Cnode%3D~%5C%22%24node%5C%22%2Cname%3D~%5C%22%24container%5C%22%2Cmarathon_app_id%20%3D~%5C%22%24marathon_app%5C%22%2Cimage%3D~%5C%22%24image%5C%22%7D)%20by%20(node)%22%2C%22range_input%22%3A%22900s%22%2C%22end_input%22%3A%222015-7-7%2010%3A19%22%2C%22step_input%22%3A%22%22%2C%22stacked%22%3Afalse%2C%22tab%22%3A0%7D%5D"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Running Containers",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "decimals": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": 100,
+            "leftMin": 0,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": 80,
+            "threshold1Color": "rgba(216, 200, 27, 0.47)",
+            "threshold2": 90,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)",
+            "thresholdLine": false
+          },
+          "id": 9,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 5,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "calculatedInterval": "30m",
+              "datasourceErrors": {},
+              "errors": {},
+              "expr": "sum(container_fs_usage_bytes{node=~\"$node\"}) by (node) / sum(container_fs_limit_bytes{node=~\"$node\"}) by (node) * 100",
+              "interval": "",
+              "intervalFactor": 3,
+              "legendFormat": "{{ node }}",
+              "metric": "",
+              "prometheusLink": "/api/datasources/proxy/1/graph#%5B%7B%22expr%22%3A%22sum(container_fs_usage_bytes%7Bnode%3D~%5C%22%24node%5C%22%7D)%20by%20(node)%20%2F%20sum(container_fs_limit_bytes%7Bnode%3D~%5C%22%24node%5C%22%7D)%20by%20(node)%20*%20100%22%2C%22range_input%22%3A%22432000s%22%2C%22end_input%22%3A%222015-7-7%2010%3A23%22%2C%22step_input%22%3A%22%22%2C%22stacked%22%3Afalse%2C%22tab%22%3A0%7D%5D"
+            }
+          ],
+          "timeFrom": "1d",
+          "timeShift": null,
+          "title": "Disk Usage",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "percent",
+            "short"
+          ]
+        }
+      ],
+      "title": "Row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": 100,
+            "leftMin": 0,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 7,
+          "legend": {
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "calculatedInterval": "1m",
+              "datasourceErrors": {},
+              "errors": {},
+              "expr": "sum(rate(container_cpu_usage_seconds_total{id=\"/\",node=~\"$node\"}[30s])) / count(container_cpu_usage_seconds_total{id=\"/\"}) * 100",
+              "interval": "",
+              "intervalFactor": 10,
+              "metric": "",
+              "prometheusLink": "/api/datasources/proxy/1/graph#%5B%7B%22expr%22%3A%22sum(rate(container_cpu_usage_seconds_total%7Bid%3D%5C%22%2F%5C%22%2Cnode%3D~%5C%22%24node%5C%22%7D%5B30s%5D))%20%2F%20count(container_cpu_usage_seconds_total%7Bid%3D%5C%22%2F%5C%22%7D)%20*%20100%22%2C%22range_input%22%3A%223600s%22%2C%22end_input%22%3A%222015-6-26%209%3A12%22%2C%22step_input%22%3A%22%22%2C%22stacked%22%3Afalse%2C%22tab%22%3A0%7D%5D"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "CPU Total",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "percent",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "Prometheus",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "height": "300",
+          "hideTimeOverride": false,
+          "id": 1,
+          "legend": {
+            "avg": true,
+            "current": false,
+            "hideEmpty": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 1,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 9,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "calculatedInterval": "5s",
+              "datasourceErrors": {},
+              "errors": {},
+              "expr": "topk(5, sum(rate(container_cpu_usage_seconds_total{id=~\"^/docker/\",name=~\"$container\",node=~\"$node\",marathon_app_id=~\"$marathon_app\",image=~\"$image\"}[30s])) by (name, node, marathon_app_id)) * 100",
+              "interval": "",
+              "intervalFactor": 5,
+              "legendFormat": "{{ (typeof marathon_app_id != \"undefined\" ? marathon_app_id : name) }} on {{ node }}",
+              "metric": "",
+              "prometheusLink": "/api/datasources/proxy/1/graph#%5B%7B%22expr%22%3A%22topk(5%2C%20sum(rate(container_cpu_usage_seconds_total%7Bid%3D~%5C%22%5E%2Fdocker%2F%5C%22%2Cname%3D~%5C%22%24container%5C%22%2Cnode%3D~%5C%22%24node%5C%22%2Cmarathon_app_id%3D~%5C%22%24marathon_app%5C%22%2Cimage%3D~%5C%22%24image%5C%22%7D%5B30s%5D))%20by%20(name%2C%20node%2C%20marathon_app_id))%20*%20100%22%2C%22range_input%22%3A%22900s%22%2C%22end_input%22%3A%222015-7-8%208%3A53%22%2C%22step_input%22%3A%22%22%2C%22stacked%22%3Afalse%2C%22tab%22%3A0%7D%5D"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Container CPU",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "percent",
+            "short"
+          ]
+        }
+      ],
+      "showTitle": false,
+      "title": "New row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": 0,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 8,
+          "legend": {
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "calculatedInterval": "1m",
+              "datasourceErrors": {},
+              "errors": {},
+              "expr": "sum(container_memory_usage_bytes{id=\"/\",node=~\"$node\"})",
+              "intervalFactor": 10,
+              "metric": "",
+              "prometheusLink": "/api/datasources/proxy/1/graph#%5B%7B%22expr%22%3A%22sum(container_memory_usage_bytes%7Bid%3D%5C%22%2F%5C%22%2Cnode%3D~%5C%22%24node%5C%22%7D)%22%2C%22range_input%22%3A%223601s%22%2C%22end_input%22%3A%222015-6-26%209%3A15%22%2C%22step_input%22%3A%22%22%2C%22stacked%22%3Afalse%2C%22tab%22%3A0%7D%5D"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Memory Total",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bytes",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "Prometheus",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "height": "300",
+          "id": 2,
+          "legend": {
+            "avg": true,
+            "current": false,
+            "hideEmpty": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 9,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "calculatedInterval": "2s",
+              "datasourceErrors": {},
+              "errors": {},
+              "expr": "topk(5, sum(container_memory_usage_bytes{id=~\"^/docker/\",name=~\"$container\",node=~\"$node\",marathon_app_id=~\"$marathon_app\",image=~\"$image\"}) by (name, node, marathon_app_id))",
+              "interval": "",
+              "intervalFactor": 2,
+              "legendFormat": "{{ (typeof marathon_app_id != \"undefined\" ? marathon_app_id : name) }} on {{ node }}",
+              "metric": "",
+              "prometheusLink": "/api/datasources/proxy/1/graph#%5B%7B%22expr%22%3A%22topk(5%2C%20sum(container_memory_usage_bytes%7Bid%3D~%5C%22%5E%2Fdocker%2F%5C%22%2Cname%3D~%5C%22%24container%5C%22%2Cnode%3D~%5C%22%24node%5C%22%2Cmarathon_app_id%3D~%5C%22%24marathon_app%5C%22%2Cimage%3D~%5C%22%24image%5C%22%7D)%20by%20(name%2C%20node%2C%20marathon_app_id))%22%2C%22range_input%22%3A%22900s%22%2C%22end_input%22%3A%222015-7-8%208%3A54%22%2C%22step_input%22%3A%22%22%2C%22stacked%22%3Afalse%2C%22tab%22%3A0%7D%5D"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Container Memory",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bytes",
+            "short"
+          ]
+        }
+      ],
+      "title": "New row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 5,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "calculatedInterval": "2s",
+              "datasourceErrors": {},
+              "errors": {},
+              "expr": "topk(5, rate(container_network_transmit_bytes_total{id=~\"^/docker/\",name=~\"$container\",node=~\"$node\",marathon_app_id=~\"$marathon_app\",image=~\"$image\"}[1m]))",
+              "interval": "",
+              "intervalFactor": 2,
+              "legendFormat": "{{ (typeof marathon_app_id != \"undefined\" ? marathon_app_id : name) }} on {{ node }}",
+              "metric": "",
+              "prometheusLink": "/api/datasources/proxy/1/graph#%5B%7B%22expr%22%3A%22topk(5%2C%20rate(container_network_transmit_bytes_total%7Bid%3D~%5C%22%5E%2Fdocker%2F%5C%22%2Cname%3D~%5C%22%24container%5C%22%2Cnode%3D~%5C%22%24node%5C%22%2Cmarathon_app_id%3D~%5C%22%24marathon_app%5C%22%2Cimage%3D~%5C%22%24image%5C%22%7D%5B1m%5D))%22%2C%22range_input%22%3A%223600s%22%2C%22end_input%22%3A%222015-6-24%2013%3A17%22%2C%22step_input%22%3A%22%22%2C%22stacked%22%3Afalse%2C%22tab%22%3A0%7D%5D"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Outgoing Traffic",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bps",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "Prometheus",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 3,
+          "legend": {
+            "alignAsTable": false,
+            "avg": true,
+            "current": false,
+            "hideEmpty": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": false,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "calculatedInterval": "2s",
+              "datasourceErrors": {},
+              "errors": {},
+              "expr": "topk(5, rate(container_network_receive_bytes_total{id=~\"^/docker/\",node=~\"$node\",name=~\"$container\",node=~\"$node\",marathon_app=~\"$marathon_app\",image=~\"$image\"}[1m]))",
+              "hide": false,
+              "interval": "",
+              "intervalFactor": 2,
+              "legendFormat": "{{ (typeof marathon_app_id != \"undefined\" ? marathon_app_id : name) }} on {{ node }}",
+              "metric": "",
+              "prometheusLink": "/api/datasources/proxy/1/graph#%5B%7B%22expr%22%3A%22topk(5%2C%20rate(container_network_receive_bytes_total%7Bid%3D~%5C%22%5E%2Fdocker%2F%5C%22%2Cnode%3D~%5C%22%24node%5C%22%2Cname%3D~%5C%22%24container%5C%22%2Cnode%3D~%5C%22%24node%5C%22%2Cmarathon_app%3D~%5C%22%24marathon_app%5C%22%2Cimage%3D~%5C%22%24image%5C%22%7D%5B1m%5D))%22%2C%22range_input%22%3A%223600s%22%2C%22end_input%22%3A%222015-6-24%2013%3A17%22%2C%22step_input%22%3A%22%22%2C%22stacked%22%3Afalse%2C%22tab%22%3A0%7D%5D",
+              "target": ""
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Incomming Traffic",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "Bps",
+            "short"
+          ]
+        }
+      ],
+      "title": "New row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [],
+      "title": "New row"
+    }
+  ],
+  "nav": [
+    {
+      "collapse": false,
+      "enable": true,
+      "notice": false,
+      "now": true,
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "type": "timepicker"
+    }
+  ],
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "allFormat": "regex wildcard",
+        "current": {
+          "text": "All",
+          "value": ".*"
+        },
+        "datasource": "Prometheus",
+        "includeAll": true,
+        "name": "node",
+        "options": [
+          {
+            "text": "All",
+            "value": ".*"
+          },
+          {
+            "text": "node1",
+            "value": "node1"
+          },
+          {
+            "text": "node2",
+            "value": "node2"
+          },
+          {
+            "text": "node3",
+            "value": "node3"
+          }
+        ],
+        "query": "container_last_seen{id=\"/\"}",
+        "refresh_on_load": false,
+        "regex": "node=\"(.*)\"",
+        "type": "query"
+      },
+      {
+        "allFormat": "regex wildcard",
+        "current": {
+          "text": "All",
+          "value": ".*"
+        },
+        "datasource": "Prometheus",
+        "includeAll": true,
+        "name": "container",
+        "options": [
+          {
+            "text": "All",
+            "value": ".*"
+          },
+          {
+            "text": "/docker/b5b435e7aacdf1c3283daff33eb3621f2c9c11fbd82be1d070da4ce1cb34632f",
+            "value": "/docker/b5b435e7aacdf1c3283daff33eb3621f2c9c11fbd82be1d070da4ce1cb34632f"
+          },
+          {
+            "text": "prometheus",
+            "value": "prometheus"
+          },
+          {
+            "text": "/docker/03e3019421ef42445d58b364180e8a96e5061b34d287ba8ba68e5b361a45bb79",
+            "value": "/docker/03e3019421ef42445d58b364180e8a96e5061b34d287ba8ba68e5b361a45bb79"
+          },
+          {
+            "text": "/docker/27d17024e57d028d72dff98d96c4c4ae7984d60013cdba66d60cbca806ce683d",
+            "value": "/docker/27d17024e57d028d72dff98d96c4c4ae7984d60013cdba66d60cbca806ce683d"
+          },
+          {
+            "text": "/docker/e2442a53cadc6622ac5ddd6cfcd770d43fcc131f184981367de83dffb883b08f",
+            "value": "/docker/e2442a53cadc6622ac5ddd6cfcd770d43fcc131f184981367de83dffb883b08f"
+          },
+          {
+            "text": "cadvisor",
+            "value": "cadvisor"
+          },
+          {
+            "text": "/docker/e04b20542689e9afa3eb3c30951658daed0cdd21e5fd3a91f44a26db6a8f5999",
+            "value": "/docker/e04b20542689e9afa3eb3c30951658daed0cdd21e5fd3a91f44a26db6a8f5999"
+          },
+          {
+            "text": "/docker/4066c91d91e36fcde859f6d0d9cc66796d1d56fbc01354554a04af0bc5ad1504",
+            "value": "/docker/4066c91d91e36fcde859f6d0d9cc66796d1d56fbc01354554a04af0bc5ad1504"
+          },
+          {
+            "text": "/docker/77b1209033dee15da4db352c46257786085643e288794814f323fa26e0068f13",
+            "value": "/docker/77b1209033dee15da4db352c46257786085643e288794814f323fa26e0068f13"
+          },
+          {
+            "text": "/docker/978a24d49bdf44cbcd47a88ac59a481925c19e928d33011d13e15c4db161da63",
+            "value": "/docker/978a24d49bdf44cbcd47a88ac59a481925c19e928d33011d13e15c4db161da63"
+          },
+          {
+            "text": "/docker/091bd066d25458959b077ee014c26c959d80f2e6fbc82609d675eea0f8ab3398",
+            "value": "/docker/091bd066d25458959b077ee014c26c959d80f2e6fbc82609d675eea0f8ab3398"
+          },
+          {
+            "text": "/docker/a8a24081dc18f3139d3a60c549a462b4bff6e3f204806d506702184c24bce91e",
+            "value": "/docker/a8a24081dc18f3139d3a60c549a462b4bff6e3f204806d506702184c24bce91e"
+          },
+          {
+            "text": "/docker/5af013e9c21cd0108c39b1d8df4169e1693d6d982b14877c2eb5d37879086a83",
+            "value": "/docker/5af013e9c21cd0108c39b1d8df4169e1693d6d982b14877c2eb5d37879086a83"
+          },
+          {
+            "text": "mesos-e4346ca7-54b2-4bac-b58e-5cdb7da58ff9",
+            "value": "mesos-e4346ca7-54b2-4bac-b58e-5cdb7da58ff9"
+          },
+          {
+            "text": "/docker/ecbf2ab2c3ea01f29a88c56acd7a400a8818f180b10121a86df4ea1920d09183",
+            "value": "/docker/ecbf2ab2c3ea01f29a88c56acd7a400a8818f180b10121a86df4ea1920d09183"
+          },
+          {
+            "text": "/docker/dbb0cd1055b1a13c8f0502b57213a94660bc6f770efc871f3256fe1e6c8b619f",
+            "value": "/docker/dbb0cd1055b1a13c8f0502b57213a94660bc6f770efc871f3256fe1e6c8b619f"
+          },
+          {
+            "text": "/docker/ab17bae782d6de7e3545060271ead6df4326940bda0bf0d72261c1d8ec0c9479",
+            "value": "/docker/ab17bae782d6de7e3545060271ead6df4326940bda0bf0d72261c1d8ec0c9479"
+          },
+          {
+            "text": "/docker/086630861f75923b4d0d3cbf89005a73bb41ad0dc11764bdb35650f458a14566",
+            "value": "/docker/086630861f75923b4d0d3cbf89005a73bb41ad0dc11764bdb35650f458a14566"
+          },
+          {
+            "text": "/docker/de2173cc10ecc1234f7eea58078f9768fd91c3dbcac09c1689d95cc8fcbd400c",
+            "value": "/docker/de2173cc10ecc1234f7eea58078f9768fd91c3dbcac09c1689d95cc8fcbd400c"
+          },
+          {
+            "text": "/docker/8d65ca76f9a70e1493409889afce27f4c164c57c926338230c12e7ec5adaa261",
+            "value": "/docker/8d65ca76f9a70e1493409889afce27f4c164c57c926338230c12e7ec5adaa261"
+          },
+          {
+            "text": "/docker/de2202bf03cd6d2933afd855458caf6c6b6bc48e33f4c961fa54c06a952acaed",
+            "value": "/docker/de2202bf03cd6d2933afd855458caf6c6b6bc48e33f4c961fa54c06a952acaed"
+          },
+          {
+            "text": "registrator",
+            "value": "registrator"
+          },
+          {
+            "text": "/docker/3399e2de809dc729ce777f259f0bf014ba0872d6a2e6d882fd8ee97c69a86b9d",
+            "value": "/docker/3399e2de809dc729ce777f259f0bf014ba0872d6a2e6d882fd8ee97c69a86b9d"
+          },
+          {
+            "text": "docker-controller",
+            "value": "docker-controller"
+          },
+          {
+            "text": "/docker/efd6344c6f1129d7e6a8c52e03931b37d7a85ec0d30f959088dfd1e63a70d385",
+            "value": "/docker/efd6344c6f1129d7e6a8c52e03931b37d7a85ec0d30f959088dfd1e63a70d385"
+          },
+          {
+            "text": "/docker/5f978720c6c4995c324a122d8b05eef3c4454d9bdb70eeb29e6377d6606cf845",
+            "value": "/docker/5f978720c6c4995c324a122d8b05eef3c4454d9bdb70eeb29e6377d6606cf845"
+          },
+          {
+            "text": "/docker/e78289721e42c55168c0f1fa330c4c7bc87d092849f8a6daa4241a50a940ee87",
+            "value": "/docker/e78289721e42c55168c0f1fa330c4c7bc87d092849f8a6daa4241a50a940ee87"
+          },
+          {
+            "text": "/docker/1ecfc2a80a03eb47457bdb55d6cbc168a8eea8f50119ff1a52eaf5298270c578",
+            "value": "/docker/1ecfc2a80a03eb47457bdb55d6cbc168a8eea8f50119ff1a52eaf5298270c578"
+          },
+          {
+            "text": "mesos-5c7c0828-31f3-4933-aa99-ad122a7466e9",
+            "value": "mesos-5c7c0828-31f3-4933-aa99-ad122a7466e9"
+          },
+          {
+            "text": "mesos-051bc262-fbd0-41a1-bf80-f2ecacd36217",
+            "value": "mesos-051bc262-fbd0-41a1-bf80-f2ecacd36217"
+          },
+          {
+            "text": "/docker/ade1716d19571cb4460ceab411e463c864a3fd2d92dda031e8d8fe59f192b2c4",
+            "value": "/docker/ade1716d19571cb4460ceab411e463c864a3fd2d92dda031e8d8fe59f192b2c4"
+          },
+          {
+            "text": "/docker/7abe2937cbd2e547cafa384750997d2be877bb690eb4b883f5defbdafa720669",
+            "value": "/docker/7abe2937cbd2e547cafa384750997d2be877bb690eb4b883f5defbdafa720669"
+          },
+          {
+            "text": "/docker/fe91777806026f09817bae178c8a2e9abb8c931384dc7c71ce670706c3620ac6",
+            "value": "/docker/fe91777806026f09817bae178c8a2e9abb8c931384dc7c71ce670706c3620ac6"
+          },
+          {
+            "text": "/docker/309c6d28ae5fa53873074fd9bd65c36428a6f462adbea13ba94eba2ae92d0e19",
+            "value": "/docker/309c6d28ae5fa53873074fd9bd65c36428a6f462adbea13ba94eba2ae92d0e19"
+          },
+          {
+            "text": "/docker/f23fa0e6f6cf4535bdacb45d579b6d80f350d4cba698a989f48bc38c7685393c",
+            "value": "/docker/f23fa0e6f6cf4535bdacb45d579b6d80f350d4cba698a989f48bc38c7685393c"
+          },
+          {
+            "text": "/docker/113f4366f8777234d2a9c110e58964ba62c0c81b6d4f72bf82390404b0dab602",
+            "value": "/docker/113f4366f8777234d2a9c110e58964ba62c0c81b6d4f72bf82390404b0dab602"
+          },
+          {
+            "text": "/docker/89fe30bdfbaf9e9ccfef624919efd30fb5797ddad73b8cb57f3d3ad5b9f6937f",
+            "value": "/docker/89fe30bdfbaf9e9ccfef624919efd30fb5797ddad73b8cb57f3d3ad5b9f6937f"
+          },
+          {
+            "text": "/docker/4c90cf1b35225d4b684e8a48aecb85a43455ebba7dfb49e481938d83d1df77c6",
+            "value": "/docker/4c90cf1b35225d4b684e8a48aecb85a43455ebba7dfb49e481938d83d1df77c6"
+          },
+          {
+            "text": "/docker/168cf97d3cd2c64c9205967795599943b10573f261a1c074a1780a1230b71bff",
+            "value": "/docker/168cf97d3cd2c64c9205967795599943b10573f261a1c074a1780a1230b71bff"
+          },
+          {
+            "text": "/docker/4c74e7ce77e853c85c4b3b4eda2247b39af8b044d2dcad3ecd7c12c54235f8dd",
+            "value": "/docker/4c74e7ce77e853c85c4b3b4eda2247b39af8b044d2dcad3ecd7c12c54235f8dd"
+          },
+          {
+            "text": "/docker/63b5c635876a189fbba9c9c5b471e164dac9ceb11a28c6280d8e7f97843aef55",
+            "value": "/docker/63b5c635876a189fbba9c9c5b471e164dac9ceb11a28c6280d8e7f97843aef55"
+          },
+          {
+            "text": "/docker/e05a4fbfc125238fcaa98595aade0a838d08fe92260e07bf43d827961cf6bfe9",
+            "value": "/docker/e05a4fbfc125238fcaa98595aade0a838d08fe92260e07bf43d827961cf6bfe9"
+          },
+          {
+            "text": "weave",
+            "value": "weave"
+          },
+          {
+            "text": "/docker/fc4b0b270032f024c646337864defa62e9832fc455fc66f78c8a16b3dd586a57",
+            "value": "/docker/fc4b0b270032f024c646337864defa62e9832fc455fc66f78c8a16b3dd586a57"
+          },
+          {
+            "text": "/docker/14b88451839b7812f9f16362eb32842411f201a4ec86b1f84d124afb36ec1d5c",
+            "value": "/docker/14b88451839b7812f9f16362eb32842411f201a4ec86b1f84d124afb36ec1d5c"
+          },
+          {
+            "text": "/docker/efc93b15f87eef7632e24b3f39d7d0b5144a16e44170cda18339c83ce62cd249",
+            "value": "/docker/efc93b15f87eef7632e24b3f39d7d0b5144a16e44170cda18339c83ce62cd249"
+          },
+          {
+            "text": "/docker/c8e83ea7074fb09f28815662e5766c51957b012f71dac7487aaf298dfd33572b",
+            "value": "/docker/c8e83ea7074fb09f28815662e5766c51957b012f71dac7487aaf298dfd33572b"
+          },
+          {
+            "text": "/docker/194921910afad4f2027601f11eebffb1df9fa9292ceae0156f134f9527a728c7",
+            "value": "/docker/194921910afad4f2027601f11eebffb1df9fa9292ceae0156f134f9527a728c7"
+          },
+          {
+            "text": "/docker/e7fe164575123575b42b4a9baef24c501b5a8f87908cd45261f5336b5897870a",
+            "value": "/docker/e7fe164575123575b42b4a9baef24c501b5a8f87908cd45261f5336b5897870a"
+          },
+          {
+            "text": "/docker/52149da7564c7c56ed120e517be8917ab8fb6c25bc02179c9e71bb8316eb2943",
+            "value": "/docker/52149da7564c7c56ed120e517be8917ab8fb6c25bc02179c9e71bb8316eb2943"
+          },
+          {
+            "text": "/docker/eaa37dbcdbef40e5f58d14ac8220fb1f3a3232a6c886c9567ca2ffc8f1434098",
+            "value": "/docker/eaa37dbcdbef40e5f58d14ac8220fb1f3a3232a6c886c9567ca2ffc8f1434098"
+          },
+          {
+            "text": "/docker/510b48a576434a623a240a8bb53a836cac0c266b97c95576b782a9ab9887a877",
+            "value": "/docker/510b48a576434a623a240a8bb53a836cac0c266b97c95576b782a9ab9887a877"
+          },
+          {
+            "text": "/docker/ff0b95cb0fe445ac5be207287fb337095dbd43920f046c0832e850d3853f91b9",
+            "value": "/docker/ff0b95cb0fe445ac5be207287fb337095dbd43920f046c0832e850d3853f91b9"
+          },
+          {
+            "text": "/docker/b271da7649e478f078f266aa3e6eee7d17b2a7f09635880d6256863ee778e826",
+            "value": "/docker/b271da7649e478f078f266aa3e6eee7d17b2a7f09635880d6256863ee778e826"
+          },
+          {
+            "text": "/docker/0d0d1606b07e92758d2610a74a602284442e051f4d6b46d7c9904eda86ba5ad7",
+            "value": "/docker/0d0d1606b07e92758d2610a74a602284442e051f4d6b46d7c9904eda86ba5ad7"
+          },
+          {
+            "text": "/docker/a0beee49cb8bd7952cb392184cc4a02a4e53ec49243d09968cf0cee1e0875bd8",
+            "value": "/docker/a0beee49cb8bd7952cb392184cc4a02a4e53ec49243d09968cf0cee1e0875bd8"
+          },
+          {
+            "text": "/docker/bac4ba6b794d25b7aa8220c0254d52f41b1343d4048a38a0122afb765e73ce95",
+            "value": "/docker/bac4ba6b794d25b7aa8220c0254d52f41b1343d4048a38a0122afb765e73ce95"
+          },
+          {
+            "text": "distracted_ardinghelli",
+            "value": "distracted_ardinghelli"
+          },
+          {
+            "text": "/docker/e2cd82a2f92560e31f4ff0c240f6ca5e192c3d09b46c90648e5c8c8b07964f7f",
+            "value": "/docker/e2cd82a2f92560e31f4ff0c240f6ca5e192c3d09b46c90648e5c8c8b07964f7f"
+          },
+          {
+            "text": "mesos-2f4592bf-7228-4476-846c-b11a756125b1",
+            "value": "mesos-2f4592bf-7228-4476-846c-b11a756125b1"
+          },
+          {
+            "text": "mesos-79495bb2-972f-45d7-95fc-c9423fc4e59b",
+            "value": "mesos-79495bb2-972f-45d7-95fc-c9423fc4e59b"
+          },
+          {
+            "text": "/docker/186ce24b3be6214adc6899e77bd842de63f7689571c23ca7bdb49d4f72366c0f",
+            "value": "/docker/186ce24b3be6214adc6899e77bd842de63f7689571c23ca7bdb49d4f72366c0f"
+          },
+          {
+            "text": "/docker/f2493e3f32cad5eb177f306d1f3d4cdf6a04bf0f3f295e0b2c04f9d1145e6742",
+            "value": "/docker/f2493e3f32cad5eb177f306d1f3d4cdf6a04bf0f3f295e0b2c04f9d1145e6742"
+          },
+          {
+            "text": "/docker/9b06fa893eb334360ac765a398de0cc4ad5bdafa7db12d42baf07e8b11985635",
+            "value": "/docker/9b06fa893eb334360ac765a398de0cc4ad5bdafa7db12d42baf07e8b11985635"
+          },
+          {
+            "text": "/docker/b64a7622459eb7f4f756e60af4ae3532decb3009aaa033a4dd440b6eccf642ba",
+            "value": "/docker/b64a7622459eb7f4f756e60af4ae3532decb3009aaa033a4dd440b6eccf642ba"
+          },
+          {
+            "text": "/docker/11b100a3886649a507be137750fbf4be8db71a6130084c8bcca7ea96bae04d9b",
+            "value": "/docker/11b100a3886649a507be137750fbf4be8db71a6130084c8bcca7ea96bae04d9b"
+          },
+          {
+            "text": "/docker/57d7611724b6ea397a552312f0dfea08814d5c7f4d1e97151552487fe693c0ef",
+            "value": "/docker/57d7611724b6ea397a552312f0dfea08814d5c7f4d1e97151552487fe693c0ef"
+          },
+          {
+            "text": "registry",
+            "value": "registry"
+          },
+          {
+            "text": "/docker/66a33477e10e1db66e0537a5a1ba6a26c5306c63e7b67ee0d9cd7b66442d96a9",
+            "value": "/docker/66a33477e10e1db66e0537a5a1ba6a26c5306c63e7b67ee0d9cd7b66442d96a9"
+          },
+          {
+            "text": "/docker/5b697d911e60d61405b1a5d9c303f2dadfe9537e62eba9d8c646fec4b5d576dc",
+            "value": "/docker/5b697d911e60d61405b1a5d9c303f2dadfe9537e62eba9d8c646fec4b5d576dc"
+          },
+          {
+            "text": "/docker/fc4ca757348c89f8fff1b7b76aed9b16fcfd6533ab9f1728ae99632dc882a19a",
+            "value": "/docker/fc4ca757348c89f8fff1b7b76aed9b16fcfd6533ab9f1728ae99632dc882a19a"
+          },
+          {
+            "text": "/docker/2f2d910c0ec381c442b973f9f63a41cb06d54e15c9d21622fe7c4540ecb1a8ad",
+            "value": "/docker/2f2d910c0ec381c442b973f9f63a41cb06d54e15c9d21622fe7c4540ecb1a8ad"
+          },
+          {
+            "text": "/docker/07310a55391866fd3f23059ec55b29790cc08b2f697ddffc8804eec062d5dba6",
+            "value": "/docker/07310a55391866fd3f23059ec55b29790cc08b2f697ddffc8804eec062d5dba6"
+          },
+          {
+            "text": "mesos-7756a9ac-3ec6-49ec-ac6c-189e4fc8fd41",
+            "value": "mesos-7756a9ac-3ec6-49ec-ac6c-189e4fc8fd41"
+          },
+          {
+            "text": "/docker/1fee80da1bfcf7aac85bebc6becda35194ce01689d04f249d59e1c81f4601120",
+            "value": "/docker/1fee80da1bfcf7aac85bebc6becda35194ce01689d04f249d59e1c81f4601120"
+          },
+          {
+            "text": "/docker/289bf0597d0a9904e7aaa943c71a399d30f7326b722f0eefc92dcfb5d5104df3",
+            "value": "/docker/289bf0597d0a9904e7aaa943c71a399d30f7326b722f0eefc92dcfb5d5104df3"
+          },
+          {
+            "text": "mesos-5d0fa2d6-6697-42a5-84ce-060c6d610ee1",
+            "value": "mesos-5d0fa2d6-6697-42a5-84ce-060c6d610ee1"
+          },
+          {
+            "text": "/docker/bbc283dfde04ba3192424a19c3398e3d93fe0b45955cc6724c931b7e00289a30",
+            "value": "/docker/bbc283dfde04ba3192424a19c3398e3d93fe0b45955cc6724c931b7e00289a30"
+          },
+          {
+            "text": "/docker/b4b52035634edcc775a326a4ac006618a76686b546167c9ae10ce5284a08279d",
+            "value": "/docker/b4b52035634edcc775a326a4ac006618a76686b546167c9ae10ce5284a08279d"
+          },
+          {
+            "text": "/docker/de40b9745742bebb27c5cc4f7a4213317c0cbbbc52e8a7472cbf4a7bcf9c7b7f",
+            "value": "/docker/de40b9745742bebb27c5cc4f7a4213317c0cbbbc52e8a7472cbf4a7bcf9c7b7f"
+          }
+        ],
+        "query": "container_last_seen{id=~\"/docker/\"}",
+        "refresh_on_load": false,
+        "regex": "name=\"(.*?)\"",
+        "type": "query"
+      },
+      {
+        "allFormat": "regex wildcard",
+        "current": {
+          "text": "All",
+          "value": ".*"
+        },
+        "datasource": null,
+        "includeAll": true,
+        "name": "marathon_app",
+        "options": [
+          {
+            "text": "All",
+            "value": ".*"
+          },
+          {
+            "text": "/monitoring/grafana",
+            "value": "/monitoring/grafana"
+          },
+          {
+            "text": "/customers/4/test",
+            "value": "/customers/4/test"
+          },
+          {
+            "text": "/monitoring/prometheus",
+            "value": "/monitoring/prometheus"
+          }
+        ],
+        "query": "container_running{marathon_app!=\"\"}",
+        "refresh_on_load": false,
+        "regex": "marathon_app=\"(.*?)\"",
+        "type": "query"
+      },
+      {
+        "allFormat": "regex wildcard",
+        "current": {
+          "text": "All",
+          "value": ".*"
+        },
+        "datasource": null,
+        "includeAll": true,
+        "name": "image",
+        "options": [
+          {
+            "text": "All",
+            "value": ".*"
+          },
+          {
+            "text": "weaveworks/weave:0.11.0",
+            "value": "weaveworks/weave:0.11.0"
+          },
+          {
+            "text": "10.90.43.79:5000/maint",
+            "value": "10.90.43.79:5000/maint"
+          },
+          {
+            "text": "10.123.0.1:5000/registrator:latest",
+            "value": "10.123.0.1:5000/registrator:latest"
+          },
+          {
+            "text": "marmelatze/grafana-prometheus:latest",
+            "value": "marmelatze/grafana-prometheus:latest"
+          },
+          {
+            "text": "registry",
+            "value": "registry"
+          },
+          {
+            "text": "google/cadvisor:latest",
+            "value": "google/cadvisor:latest"
+          },
+          {
+            "text": "10.123.0.1:5000/docker-controller:1.0-SNAPSHOT",
+            "value": "10.123.0.1:5000/docker-controller:1.0-SNAPSHOT"
+          },
+          {
+            "text": "10.123.0.1:5000/prometheus:0.1",
+            "value": "10.123.0.1:5000/prometheus:0.1"
+          },
+          {
+            "text": "ubuntu:latest",
+            "value": "ubuntu:latest"
+          }
+        ],
+        "query": "container_running",
+        "refresh_on_load": false,
+        "regex": "image=\"(.*?)\"",
+        "type": "query"
+      }
+    ]
+  },
+  "annotations": {
+    "list": []
+  },
+  "refresh": "10s",
+  "schemaVersion": 6,
+  "version": 36
+}

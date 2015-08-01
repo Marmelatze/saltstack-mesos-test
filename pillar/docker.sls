@@ -1,7 +1,7 @@
 docker:
   host_id: {{ grains['host_id'] }}
   gw: 10.{{ salt['grains.get']('customer_id', 0) }}.0.{{ grains['host_id'] }}
-  registry: 10.123.0.1:5000
+  registry: 10.0.0.1:5000
   options:
     mtu: 1480
     bridge: weave

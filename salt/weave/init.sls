@@ -1,3 +1,6 @@
+bridge-utils:
+  pkg.installed: []
+
 weave:
   file.managed:
     - name: /usr/local/bin/weave
@@ -28,7 +31,7 @@ weave-bridge-config:
         auto weave
         iface weave inet manual
               pre-up /usr/local/bin/weave --local create-bridge
-              post-up ip addr add dev weave {{ pillar['weave']['bridge_cidr'] }}
+              post-up ip a f dev weave; ip addr add dev weave {{ pillar['weave']['bridge_cidr'] }}
               pre-down ifconfig weave down
               post-down brctl delbr weave
     - require_in:
@@ -39,6 +42,8 @@ weave-interface:
     - name: "ifdown weave; ifup weave;"
     - watch:
       - file: weave-bridge
+    - require:
+      - pkg: bridge-utils
 
 /etc/init/weave.conf:
   file.managed:
@@ -51,5 +56,5 @@ weave-interface:
       - service: weave
 
 
-#include: 
+#include:
 #  - .weave-scope

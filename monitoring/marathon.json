@@ -1,0 +1,57 @@
+{
+  "id": "/monitoring",
+  "apps": [
+    {
+      "id": "/monitoring/grafana",
+      "dependencies": ["/monitoring/prometheus"],
+
+      "cpus": 0.1,
+      "mem": 256  ,
+      "instances": 1,
+      "env": {
+        "SERVICE_NAME": "grafana",
+        "SERVICE_CHECK_TTL": "30s",
+        "GF_SECURITY_ADMIN_PASSWORD": "install",
+        "GF_DATABASE_TYPE": "mysql",
+        "GF_DATABASE_HOST": "gateway:3306",
+        "GF_DATABASE_NAME": "grafana",
+        "GF_DATABASE_USER": "grafana",
+        "GF_DATABASE_PASSWORD": "grafana",
+        "GF_AUTH_ANONYMOUS_ENABLED": "true"
+      },
+      "constraints": [["customer", "CLUSTER", "customer-0"]],
+      "container": {
+        "type": "DOCKER",
+        "docker": {
+          "image": "marmelatze/grafana-prometheus:latest",
+          "network": "BRIDGE"
+        }
+      }
+    },
+    {
+      "id": "/monitoring/prometheus",
+      "cpus": 0.2,
+      "mem": 512,
+      "instances": 1,
+      "env": {
+        "SERVICE_NAME": "prometheus",
+        "SERVICE_CHECK_TTL": "30s"
+      },
+      "args": [
+        "-config.file=/mnt/mesos/sandbox/prometheus?raw"
+      ],
+      "uris": [
+        "http://gateway:8500/v1/kv/config/prometheus?raw"
+      ],
+      "constraints": [["customer", "CLUSTER", "customer-0"]],
+      "container": {
+        "type": "DOCKER",
+        "docker": {
+          "image": "prom/prometheus:master",
+          "network": "BRIDGE",
+          "forcePullImage": true
+        }
+      }
+    }
+  ]
+}

@@ -128,3 +128,54 @@ After the Minions have been setup run SaltStack.
 ```
 sudo salt '*' state.highstate
 ```
+
+
+# Monitoring
+
+Monitoring is done with Prometheus and Grafana. With the sample config the Grafana settings are stored in a MySQL database. So you have to setup a MySQL database or delete the corresponding settings from monitoring/marathon.json.
+
+In order to make MySQL available in the consul service discovery you need to add a service config to consul. It is recommended to install a consul agent to the same server and join it to the cluster (see [docs](https://www.consul.io/docs/agent/services.html) for more details and options).
+
+```json
+# /etc/consul/server/mysql.json
+
+{
+    "service": {
+        "name": "mysql",
+        "port": 3306
+    }
+}
+```
+
+Create a grafana database and a user:
+
+```sql
+CREATE DATABASE grafana;
+CREATE USER 'grafana'@'%' IDENTIFIED BY 'grafana';
+GRANT ALL PRIVILEGES ON grafana.* TO 'grafana'@'%';
+FLUSH PRIVILEGES;
+```
+
+To add monitoring services (Prometheus, Grafana) execute the following on the salt-master assuming you cloned the repository to /srv/salt. This will add the prometheus config to consul and create a marathon group:
+
+```
+curl -X PUT -s -H "Content-Type:application/json" --data-binary "@/srv/salt/monitoring/consul.yml" http://localhost:8500/v1/kv/config/prometheus
+```
+
+
+```
+curl -X PUT -s -H "Content-Type:application/json" --data "@/srv/salt/monitoring/marathon.json" http://localhost:8080/v2/groups/monitoring
+```
+
+Prometheus will be accessible at port 9090 and the Grafana dashboard at port 3000. The default credentials for grafana are (admin/install). You will have to create a Prometheus data source in Grafana first.
+
+Configure it like the following:
+
+* Name: Prometheus
+* Type: Prometheus
+* Default: true
+* URL: `http://gateway:9090`
+* Access: proxy
+* Basic-Auth: false
+
+A example dashboard is located at [monitoring/dashboard.json](monitoring/dashboard.json) and can be imported in Grafana.
