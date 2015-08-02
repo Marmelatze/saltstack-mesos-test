@@ -19,5 +19,5 @@ script
     --name=registrator \
     -v /var/run/docker.sock:/tmp/docker.sock \
     -h {{ grains['fqdn'] }} \
-    {{ pillar['docker']['registry'] }}/registrator:latest -ttl 30 -ttl-refresh 20 -internal consul://{{ pillar['docker']['gw'] }}:8500
+    marmelatze/registrator:latest -ttl 30 -ttl-refresh 20 -tags customer-{{ pillar['schub']['customer_id'] }} -internal consul://{{ pillar['docker']['gw'] }}:8500
 end script

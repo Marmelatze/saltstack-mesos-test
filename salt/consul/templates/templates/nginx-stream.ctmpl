@@ -1,17 +1,22 @@
+{{ "{{$customer := \"customer-" ~ customer_id ~ "\" }}" }}
+{{ "{{$gateway := \"" ~ pillar['docker']['gw'] ~ "\"}}" }}
+
+{% raw %}
 {{range ls "proxy/tcp"}}
   {{with $d := .Value | parseJSON}}
     {{if $d}}
-      {{if service (print $d.service ":" $d.containerPort)}}
-        upstream backend-{{$d.service}}-{{$d.servicePort}} {
-            {{range service (print $d.service ":" $d.containerPort)}}
+      {{if service (print $customer "." $d.service ":" $d.containerPort)}}
+        upstream backend-{{$customer}}-{{$d.service}}-{{$d.servicePort}} {
+            {{range service (print $customer "." $d.service ":" $d.containerPort)}}
             server {{.Address}}:{{.Port}};
             {{end}}
         }
         server {
-            listen {{$d.servicePort}};
-            proxy_pass backend-{{$d.service}}-{{$d.servicePort}};
+            listen {{if not $d.external}}{{$gateway}}:{{end}}{{$d.servicePort}};
+            proxy_pass backend-{{$customer}}-{{$d.service}}-{{$d.servicePort}};
         }
       {{end}}
     {{end}}
   {{end}}
 {{end}}
+{% endraw %}

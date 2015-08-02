@@ -7,6 +7,7 @@
                 "http": "http://localhost:2375/info",
                 "interval": "30s"
             }
-        ]
+        ],
+        "tags": ["customer-{{ pillar['schub']['customer_id'] }}"]
     }
 }

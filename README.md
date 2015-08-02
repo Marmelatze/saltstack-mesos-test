@@ -17,8 +17,8 @@ Role Slave:
 
 - [Mesos-Slave](https://open.mesosphere.com/getting-started/datacenter/install/)
 - [Docker](https://www.docker.com/)
-- [cAdvisor](https://github.com/google/cadvisor) for exporting metrics to prometheus
-- [Registrator](https://github.com/gliderlabs/registrator) for registering services with Consul
+- [cAdvisor](https://github.com/google/cadvisor) for exporting metrics to prometheus ([marmelatze/cadvisor](https://registry.hub.docker.com/u/marmelatze/cadvisor/) is used until https://github.com/google/cadvisor/pull/780 is merged)
+- [Registrator](https://github.com/gliderlabs/registrator) for registering services with Consul. ([Marmelatze/registrator](https://github.com/Marmelatze/registrator) is used until https://github.com/gliderlabs/registrator/pull/149 is merged)
 - [Weave](http://weave.works/) for providing a overlay network between the containers
 
 
@@ -142,7 +142,8 @@ In order to make MySQL available in the consul service discovery you need to add
 {
     "service": {
         "name": "mysql",
-        "port": 3306
+        "port": 3306,
+        "tags": ["customer-0"]
     }
 }
 ```
@@ -158,13 +159,15 @@ FLUSH PRIVILEGES;
 
 To add monitoring services (Prometheus, Grafana) execute the following on the salt-master assuming you cloned the repository to /srv/salt. This will add the prometheus config to consul and create a marathon group:
 
-```
-curl -X PUT -s -H "Content-Type:application/json" --data-binary "@/srv/salt/monitoring/consul.yml" http://localhost:8500/v1/kv/config/prometheus
-```
-
-
-```
-curl -X PUT -s -H "Content-Type:application/json" --data "@/srv/salt/monitoring/marathon.json" http://localhost:8080/v2/groups/monitoring
+```bash
+cd /srv/salt/monitoring
+CONSUL_HOST=http://localhost:8500
+MARATHON_HOST=http://localhost8080
+curl -X PUT -s --data-binary "@config_prometheus.yml" $CONSUL_HOST/v1/kv/config/prometheus
+curl -X PUT -s --data-binary "@proxy_mysql.json" $CONSUL_HOST/v1/kv/proxy/tcp/mysql
+curl -X PUT -s --data-binary "@proxy_prometheus.json" $CONSUL_HOSTv1/kv/proxy/web/prometheus
+curl -X PUT -s --data-binary "@proxy_grafana.json" $CONSUL_HOST/v1/kv/proxy/web/grafana
+curl -X PUT -s -H "Content-Type:application/json" --data "@marathon.json" $MARATHON_HOST/v2/groups/monitoring
 ```
 
 Prometheus will be accessible at port 9090 and the Grafana dashboard at port 3000. The default credentials for grafana are (admin/install). You will have to create a Prometheus data source in Grafana first.

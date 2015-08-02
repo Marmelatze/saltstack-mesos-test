@@ -1,0 +1,7 @@
+{
+  "service": "prometheus",
+  "servicePort": 9090,
+  "containerPort": 9090,
+  "timeout": 60,
+  "external": true
+}

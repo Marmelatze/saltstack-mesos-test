@@ -1,20 +1,24 @@
+{{ "{{$customer := \"customer-" ~ customer_id ~ "\" }}" }}
+{{ "{{$gateway := \"" ~ pillar['docker']['gw'] ~ "\" }}" }}
+{% raw %}
 {{range ls "proxy/http"}}
   {{with $d := .Value | parseJSON}}
     {{if $d}}
-      {{if service (print $d.service ":" $d.containerPort)}}
-        upstream backend-{{$d.service}}-{{$d.servicePort}} {
-            {{range service (print $d.service ":" $d.containerPort)}}
+      {{if service (print $customer "." $d.service ":" $d.containerPort)}}
+        upstream backend-{{$customer}}-{{$d.service}}-{{$d.servicePort}} {
+            {{range service (print $customer "." $d.service ":" $d.containerPort)}}
             server {{.Address}}:{{.Port}};
             {{end}}
         }
         server {
-            listen {{$d.servicePort}};
+            listen {{if not $d.external}}{{$gateway}}:{{end}}{{$d.servicePort}};
             location / {
                 proxy_read_timeout {{if $d.timeout }}{{$d.timeout}}{{ else }}10{{end}};
-                proxy_pass http://backend-{{$d.service}}-{{$d.servicePort}};
+                proxy_pass http://backend-{{$customer}}-{{$d.service}}-{{$d.servicePort}};
             }
         }
       {{end}}
     {{end}}
   {{end}}
 {{end}}
+{% endraw %}

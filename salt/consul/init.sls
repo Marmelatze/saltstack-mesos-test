@@ -124,22 +124,33 @@ dnsmasq:
     - watch_in:
       - service: consul-template
 
-/etc/consul/templates:
+
+/etc/consul/templates/global:
   file.recurse:
     - source: salt://consul/templates/templates
     - makedirs: True
+    - template: jinja
     - watch_in:
       - service: consul-template
     - require_in:
       - service: consul-template
+    - context:
+        customer_id: 0
 
-#/etc/consul/templates/service:
-#  file.recurse:
-#    - source: salt://consul/templates/templates
-#    - makedirs: True
-#    - template: jinja
-#    - watch_in:
-#      - service: consul-template
+{% if pillar['schub']['customer_id'] != 0 %}
+/etc/consul/templates/customer:
+  file.recurse:
+    - source: salt://consul/templates/templates
+    - makedirs: True
+    - template: jinja
+    - watch_in:
+      - service: consul-template
+    - require_in:
+      - service: consul-template
+    - context:
+        customer_id: {{ pillar['schub']['customer_id'] }}
+
+{% endif %}
 
 /etc/init/consul-template.conf:
   file.managed:

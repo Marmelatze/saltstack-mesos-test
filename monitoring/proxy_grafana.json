@@ -1,0 +1,7 @@
+{
+  "service": "grafana",
+  "servicePort": 3000,
+  "containerPort": 3000,
+  "timeout": 60,
+  "external": true
+}

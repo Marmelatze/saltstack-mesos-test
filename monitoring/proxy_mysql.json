@@ -1,0 +1,5 @@
+{
+  "service": "mysql",
+  "servicePort": 3306,
+  "containerPort": 3306
+}
