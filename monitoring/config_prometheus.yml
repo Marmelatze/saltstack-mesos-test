@@ -26,3 +26,8 @@ scrape_configs:
     source_labels: ['__meta_consul_node']
     regex: '.*'
     replacement: '${0}'
+
+  - target_label: customer
+    source_labels: ['__meta_consul_tags']
+    regex: ',customer-([0-9]+),'
+    replacement: '${1}'

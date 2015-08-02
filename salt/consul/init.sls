@@ -150,6 +150,16 @@ dnsmasq:
     - context:
         customer_id: {{ pillar['schub']['customer_id'] }}
 
+{% else %}
+/etc/nginx/sites-enabled/service-proxy:
+  file.absent: []
+
+/etc/nginx/sites-enabled/web-proxy:
+  file.absent: []
+
+/etc/nginx/streams-enabled/service-proxy:
+  file.absent: []
+
 {% endif %}
 
 /etc/init/consul-template.conf:
