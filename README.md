@@ -148,6 +148,8 @@ In order to make MySQL available in the consul service discovery you need to add
 }
 ```
 
+The tag `customer-0` is used to distinguish global services from customer services. Customer 0 is the global customer and his services are available on all nodes.
+
 Create a grafana database and a user:
 
 ```sql
