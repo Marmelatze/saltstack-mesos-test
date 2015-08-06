@@ -1,0 +1,19 @@
+{
+  "id": "/marathon-scaler",
+  "cpus": 0.1,
+  "mem": 256  ,
+  "instances": 1,
+  "env": {
+    "SERVICE_NAME": "marathon-scaler",
+    "SERVICE_CHECK_TTL": "30s"
+  },
+  "constraints": [["customer", "CLUSTER", "customer-0"]],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "marmelatze/marathon-scaler:1.0-SNAPSHOT",
+      "network": "BRIDGE"
+    }
+  },
+  "args": ["-monitoring=http://gateway:9090", "-marathonURI=http://gateway:8080", "-consul=http://gateway:8500"]
+}

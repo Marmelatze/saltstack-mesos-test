@@ -164,7 +164,7 @@ To add monitoring services (Prometheus, Grafana) execute the following on the sa
 ```bash
 cd /srv/salt/monitoring
 CONSUL_HOST=http://localhost:8500
-MARATHON_HOST=http://localhost8080
+MARATHON_HOST=http://localhost:8080
 curl -X PUT -s --data-binary "@config_prometheus.yml" $CONSUL_HOST/v1/kv/config/prometheus
 curl -X PUT -s --data-binary "@proxy_mysql.json" $CONSUL_HOST/v1/kv/proxy/tcp/mysql
 curl -X PUT -s --data-binary "@proxy_prometheus.json" $CONSUL_HOSTv1/kv/proxy/web/prometheus
@@ -240,3 +240,15 @@ The service gateway provides access from containers to services provided by othe
   * `containerPort`: The port used in the container.
   * `servicePort`: The port exposed by the service gateway.
   * `external` (Optional): Whether this service can be access from the outside or only by other containers. (Default: `false`)
+
+
+# Scaling Marathon Apps
+
+Automatic scaling of marathon apps is done via https://github.com/Marmelatze/docker-controller.
+To use it the marathon-scaler app must be run as marathon app itself:
+
+```bash
+cd /srv/salt/scaling
+MARATHON_HOST=http://localhost:8080
+curl -X PUT -s -H "Content-Type:application/json" --data "@marathon-scaler.json" $MARATHON_HOST/v2/apps/scaling
+```
