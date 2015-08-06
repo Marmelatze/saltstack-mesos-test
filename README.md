@@ -184,3 +184,59 @@ Configure it like the following:
 * Basic-Auth: false
 
 A example dashboard is located at [monitoring/dashboard.json](monitoring/dashboard.json) and can be imported in Grafana.
+
+# Service Gateway
+
+The service gateway provides access from containers to services provided by other containers or external services. The configuration is managed in the key value storage from consul. Changes will be pulled by [Consul-Template](https://github.com/hashicorp/consul-template) and will form a nginx config. Each service gets a separate config file at `/proxy/<type>/<service>` (See [here](salt/consul/templates/templates) for the templates). There are three proxy types:
+
+* HTTP reverse proxy (located in `/proxy/http/<service>`): This type will redirect all incomming traffic on a specific port to the service. Configuration:
+
+  ```json
+  {
+    "service": "grafana",
+    "servicePort": 3000,
+    "containerPort": 3000,
+    "timeout": 60,
+    "external": true
+  }
+  ```
+
+  * `service`: Name of the service, as its stored in consul.
+  * `containerPort`: The port used in the container.
+  * `servicePort`: The port exposed by the service gateway.
+  * `external` (Optional): Whether this service can be access from the outside or only by other containers. (Default: `false`)
+  * `timeout` (Optional): When there is no response from the service within the given timeout, nginx will yield a 504 gateway timeout.
+
+* Web reverse proxy (located in `/proxy/web/<service>`): Like the HTTP reverse proxy, but all services will use port 80 and be distinguished by the domain (e.g. `grafana.test.schub.local`)
+
+  ```json
+  {
+    "service": "grafana",
+    "containerPort": 3000,
+    "domain": "dashboard",
+    "timeout": 60,
+    "external": true
+  }
+  ```
+
+  * `service`: Name of the service, as its stored in consul.
+  * `containerPort`: The port used in the container.
+  * `domain`: The subdomain for this service.
+  * `external` (Optional): Whether this service can be access from the outside or only by other containers. (Default: `false`)
+  * `timeout` (Optional): When there is no response from the service within the given timeout, nginx will yield a 504 gateway timeout.
+
+* TCP reverse proxy (located in `/proxy/tcp/<service>`): Like the HTTP reverse proxy, but can be used for any TCP based service.
+
+  ```json
+  {
+    "service": "mysql",
+    "servicePort": 3306,
+    "containerPort": 3306,
+    "external": false
+  }
+  ```
+
+  * `service`: Name of the service, as its stored in consul.
+  * `containerPort`: The port used in the container.
+  * `servicePort`: The port exposed by the service gateway.
+  * `external` (Optional): Whether this service can be access from the outside or only by other containers. (Default: `false`)
