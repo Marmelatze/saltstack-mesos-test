@@ -1,3 +1,4 @@
+# install and configure docker
 docker-repo:
   pkgrepo.managed:
     - humanname: Docker
@@ -31,6 +32,7 @@ docker:
     - require:
       - pkg: docker
 
+# install required packages when using aufs
 {% if pillar['docker']['storage'] == "aufs" %}
 linux-image-extra-{{ grains['kernelrelease'] }}:
   pkg.installed:
@@ -39,18 +41,5 @@ linux-image-extra-{{ grains['kernelrelease'] }}:
 linux-image-extra-virtual:
   pkg.installed:
     - require_in: docker
-    
-{% endif %}
 
-#docker-routes:
-#  network.routes:
-#    - name: eth0
-#    - routes:
-#      {% for server, interfaces in salt['mine.get']('* and not ' ~ grains['fqdn'], 'ip_list', expr_form='compound').items() %}
-#      {% if interfaces['docker0'] is defined and interfaces['eth0'] is defined %}
-#      - name: {{ server }}
-#        ipaddr: {{ interfaces['docker0'][0].split(".")[0:3]|join(".") }}.0
-#        netmask: 255.255.255.0
-#        gateway: {{ interfaces['eth0'][0] }}
-#      {% endif %}
-#      {% endfor %}
+{% endif %}

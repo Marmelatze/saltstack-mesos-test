@@ -1,3 +1,4 @@
+# create and enable docker-controller service
 /etc/init/docker-controller.conf:
   file.managed:
     - source: salt://schub/templates/docker-controller.conf

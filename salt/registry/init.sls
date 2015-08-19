@@ -1,3 +1,4 @@
+# run a private registry via upstart
 /etc/init/registry.conf:
   file.managed:
     - source: salt://registry/templates/upstart

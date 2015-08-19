@@ -1,3 +1,4 @@
+# install and configure nginx as service gateway
 nginx:
   pkgrepo.managed:
     - humannane: Nginx Devel

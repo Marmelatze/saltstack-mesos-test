@@ -5,6 +5,7 @@ mesos:
     - require:
       - pkgrepo: mesos-repo
 
+# disable zookeeper and mesos-master on slaves
 {% if 'master' not in salt['grains.get']('roles', []) %}
 zookeeper:
   service.dead:

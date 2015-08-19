@@ -1,8 +1,8 @@
+# unzip must be installed to extract downloaded archives
 unzip:
   pkg.installed: []
 
-
-
+# create a consul user which owns the /data/consul directory and runs consul
 consul-user:
   user.present:
     - name: consul
@@ -19,6 +19,7 @@ consul-user:
       - user: consul-user
       - file: /data
 
+# download consul and extract it to /usr/local/bin/consul
 consul-download:
   cmd.run:
     - name: 'curl -L https://dl.bintray.com/mitchellh/consul/{{ pillar['consul']['version'] }}_linux_amd64.zip -o /usr/src/consul-{{ pillar['consul']['version'] }}.zip'
@@ -43,6 +44,7 @@ consul-binary:
     - watch:
       - cmd: consul-extract
 
+# download and extract consul-ui
 /usr/share/consul/ui:
   archive.extracted:
     - source: https://dl.bintray.com/mitchellh/consul/{{ pillar['consul']['version'] }}_web_ui.zip
@@ -50,7 +52,7 @@ consul-binary:
     - archive_format: zip
 
 
-## consul service
+# create upstart script for consul
 
 /etc/init/consul.conf:
   file.managed:
@@ -58,6 +60,7 @@ consul-binary:
     - watch_in:
       - service: consul
 
+# get number of expected nodes (all nodes with the master role)
 {% set expect = salt['mine.get']('G@roles:master', 'network.ip_addrs', expr_form='compound').items()|length %}
 #'
 
@@ -82,7 +85,7 @@ consul:
     - file: /etc/inid/consul.conf
 
 
-# dns
+# dnsmasq config
 dnsmasq:
   pkg.installed: []
   service:
@@ -99,7 +102,7 @@ dnsmasq:
       - service: dnsmasq
 
 
-## consul template
+# consul template
 /usr/src/consul-template:
   archive.extracted:
     - source: https://github.com/hashicorp/consul-template/releases/download/v{{ pillar['consul']['template']['version'] }}/consul-template_{{ pillar['consul']['template']['version'] }}_linux_amd64.tar.gz
@@ -117,6 +120,7 @@ dnsmasq:
     - watch:
       - archive: /usr/src/consul-template
 
+# templates for consul-template
 /etc/consul/template.hcl:
   file.managed:
     - source: salt://consul/templates/template.hcl
@@ -124,7 +128,7 @@ dnsmasq:
     - watch_in:
       - service: consul-template
 
-
+# templates with customer_id = 0 for global services
 /etc/consul/templates/global:
   file.recurse:
     - source: salt://consul/templates/templates
@@ -137,6 +141,7 @@ dnsmasq:
     - context:
         customer_id: 0
 
+# customer specific templates
 {% if pillar['schub']['customer_id'] != 0 %}
 /etc/consul/templates/customer:
   file.recurse:
@@ -162,6 +167,7 @@ dnsmasq:
 
 {% endif %}
 
+# upstart for consul-template
 /etc/init/consul-template.conf:
   file.managed:
     - source: salt://consul/templates/template-upstart

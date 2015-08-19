@@ -1,3 +1,6 @@
+# install and configure weave overlay network
+
+# needed for creating the bridge manually before running docker-daemon
 bridge-utils:
   pkg.installed: []
 
@@ -17,6 +20,7 @@ weave:
     - watch:
       - file: /usr/local/bin/weave
 
+# manually create the weave-bridge, also reboot save
 weave-bridge:
   file.blockreplace:
     - name: /etc/network/interfaces

@@ -1,5 +1,5 @@
+# install and configure marathon
 {% from "mesos/map.jinja" import mesos with context %}
-
 
 marathon:
   service.running:
@@ -23,9 +23,9 @@ marathon:
     - context:
         masters: {{ mesos.masters }}
 
+# use customer marathon-ui
 /usr/share/marathon-ui:
   git.latest:
     - name: https://github.com/Marmelatze/marathon-ui.git
     - rev: stats
     - target: /usr/share/marathon-ui
-

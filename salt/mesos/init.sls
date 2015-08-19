@@ -16,6 +16,7 @@ mesos-repo:
     - context:
         masters: {{ mesos.masters }}
 
+# cleaup-script for resetting the cluster
 /root/cleanup.sh:
   file.managed:
     - source: salt://mesos/templates/cleanup.sh
@@ -23,6 +24,7 @@ mesos-repo:
     - mode: 0755
 
 
+# make entrys for every node in the cluster for named based address resolving
 {% for server, addrs in salt['mine.get']('*', 'network.ip_addrs').items() %}
 
 host-{{ server}}:
